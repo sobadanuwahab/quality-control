@@ -53,31 +53,36 @@
 @push('scripts')
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Live search input
             const input = document.getElementById('search-input');
+            if (input) {
+                input.addEventListener('input', function() {
+                    const keyword = this.value;
+                    const tanggalMulai = document.getElementById('tanggal_mulai').value;
+                    const tanggalSampai = document.getElementById('tanggal_sampai').value;
 
-            input.addEventListener('input', function() {
-                const keyword = this.value;
-                const tanggalMulai = document.getElementById('tanggal_mulai').value;
-                const tanggalSampai = document.getElementById('tanggal_sampai').value;
+                    const url = new URL("{{ route('maintenance.projector.search') }}", window.location
+                        .origin);
+                    url.searchParams.set('search', keyword);
+                    if (tanggalMulai) url.searchParams.set('tanggal_mulai', tanggalMulai);
+                    if (tanggalSampai) url.searchParams.set('tanggal_sampai', tanggalSampai);
 
-                const url = new URL("{{ route('maintenance.projector.search') }}", window.location.origin);
-                url.searchParams.set('search', keyword);
-                if (tanggalMulai) url.searchParams.set('tanggal_mulai', tanggalMulai);
-                if (tanggalSampai) url.searchParams.set('tanggal_sampai', tanggalSampai);
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(html => {
+                            document.getElementById('result-wrapper').innerHTML = html;
+                        })
+                        .catch(error => console.error(error));
+                });
+            }
 
-                fetch(url)
-                    .then(response => response.text())
-                    .then(html => {
-                        document.getElementById('result-wrapper').innerHTML = html;
-                    })
-                    .catch(error => console.error(error));
-            });
-        });
-    </script>
-
-    <script>
-        document.getElementById('search').addEventListener('change', function() {
-            this.form.submit(); // Submit otomatis saat pilih studio
+            // Dropdown "search" (Studio) change submit
+            const studioSelect = document.getElementById('search');
+            if (studioSelect) {
+                studioSelect.addEventListener('change', function() {
+                    this.form.submit();
+                });
+            }
         });
     </script>
 @endpush
