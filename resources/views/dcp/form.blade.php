@@ -5,7 +5,7 @@
     <div class="container mt-4">
 
         <h2 class="mb-4 fw-bold text-primary">
-            <i class="bi bi-pencil-square me-2"></i> Form Penerimaan DCP & Onesheet
+            <i class="bi bi-pencil-square me-2"></i> Form Penerimaan DCP
         </h2>
 
         @if (session('success'))

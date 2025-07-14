@@ -30,18 +30,81 @@
         </div>
     @endif
 
+    {{-- Carousel DCP --}}
+    @php
+        // Ubah JSON string menjadi array
+        $dcpReports->transform(function ($item) {
+            $item->film_details = is_string($item->film_details)
+                ? json_decode($item->film_details, true)
+                : $item->film_details;
+            return $item;
+        });
+
+        // Bagi semua data DCP jadi grup isi 6
+        $chunks = $dcpReports->chunk(6);
+    @endphp
+
     <div class="container-fluid px-4">
-        <h2 class="fw-bold display-6 text-center mb-4"
-            style="font-size: 60px; color: rgb(216, 194, 68); letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif; text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);">
-            {{ Auth::user()->nama_bioskop ?? 'Dashboard' }}
-        </h2>
+        <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="8000">
+            <h2 class="fw-bold display-6 text-center text-md-center mb-4"
+                style="font-size: clamp(35px, 6vw, 50px); color: rgb(216, 194, 68); letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif; text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);">
+                {{ Auth::user()->nama_bioskop ?? 'Dashboard' }}
+            </h2>
+            <h4 class="fw-bold text-primary mb-3">
+                <i class="bi bi-collection-play me-1"></i> DCP Reports Update
+            </h4>
+
+            <div class="carousel-inner rounded shadow overflow-hidden">
+                @foreach ($chunks as $index => $group)
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
+                        <div class="d-flex justify-content-center gap-3 flex-wrap py-4 px-3">
+                            @foreach ($group as $item)
+                                <div class="card card-modern dcp-card">
+                                    @if (!empty($item->poster_url))
+                                        <div class="poster-wrapper">
+                                            <img src="{{ $item->poster_url }}"
+                                                alt="Poster {{ $item->film_details[0]['judulFilm'] ?? 'Film' }}"
+                                                class="poster-img">
+                                        </div>
+                                    @endif
+                                    <div class="card-body">
+                                        <h6 class="card-title text-primary mb-2">
+                                            <i class="bi bi-film me-1"></i> {{ $item->film_details[0]['judulFilm'] ?? '-' }}
+                                        </h6>
+                                        <p class="mb-1 text-muted">Penerima:
+                                            <strong>{{ $item->nama_penerima ?? '-' }}</strong>
+                                        </p>
+                                        <p class="mb-0 text-muted">Tanggal:
+                                            <strong>{{ \Carbon\Carbon::parse($item->tanggal_penerimaan)->format('d M Y') }}</strong>
+                                        </p>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            @if ($chunks->count() > 1)
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselDcp" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselDcp" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            @endif
+        </div>
+    </div>
+    {{-- End Carousel DCP --}}
+
+    {{-- Carousel Meteran --}}
+    <div class="container-fluid px-4">
         <h4 class="fw-bold text-primary mb-3">
             <i class="bi bi-speedometer2 me-1"></i> Meteran Reports Update
         </h4>
 
-        {{-- Carousel Log Meteran --}}
-        <div id="carouselMeteran" class="carousel slide" data-bs-ride="carousel" data-bs-pause="false" data-bs-interval="4500">
-
+        {{-- Grid Card Meteran --}}
+        <div class="row g-4 mb-5">
             @php
                 $ikon = function ($jenis) {
                     return match (true) {
@@ -70,87 +133,35 @@
                 };
             @endphp
 
-            <div class="carousel-inner">
-
-                @php $chunks = $total_kumulatif->chunk(4); @endphp
-                @foreach ($chunks as $chunkIndex => $chunk)
-                    <div class="carousel-item {{ $chunkIndex === 0 ? 'active' : '' }}">
-                        <div class="row g-5 px-3 justify-content-center">
-                            @foreach ($chunk as $nama_meteran => $data)
-                                <div class="col-md-4 mx-2 ">
-                                    <div class="card card-modern border border-5 {{ $warna($nama_meteran) }}">
-                                        <div class="card-body d-flex align-items-center">
-                                            <div class="me-3">
-                                                <i class="bi {{ $ikon($nama_meteran) }} display-3"
-                                                    style="text-shadow: 0 4px 2px rgba(0, 0, 0, 0.3);"></i>
-                                            </div>
-                                            <div>
-                                                <h6 class="card-subtitle mb-1 fw-bold text-muted">{{ $nama_meteran }}</h6>
-                                                <h5 class="card-title mb-0 fw-bold">
-                                                    {{ number_format($data['nilai'], 2) }}
-                                                    <small class="text-muted">{{ $satuan($nama_meteran) }}</small>
-                                                </h5>
-                                                @if ($data['tanggal'])
-                                                    <small class="fw-bold" style="color: #00d1b2">Update:
-                                                        {{ \Carbon\Carbon::parse($data['tanggal'])->format('d M Y') }}</small>
-                                                @else
-                                                    <small class="fw-bold text-danger">Belum ada data</small>
-                                                @endif
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
+            @foreach ($total_kumulatif as $nama_meteran => $data)
+                <div class="col-md-4">
+                    <div class="card card-modern border border-4 {{ $warna($nama_meteran) }}">
+                        <div class="card-body d-flex align-items-center">
+                            <div class="me-3">
+                                <i class="bi {{ $ikon($nama_meteran) }} display-4"
+                                    style="text-shadow: 0 4px 2px rgba(0, 0, 0, 0.3);"></i>
+                            </div>
+                            <div>
+                                <h6 class="text-muted fw-bold">{{ $nama_meteran }}</h6>
+                                <h5 class="fw-bold">
+                                    {{ number_format($data['nilai'], 2) }}
+                                    <small>{{ $satuan($nama_meteran) }}</small>
+                                </h5>
+                                @if ($data['tanggal'])
+                                    <small class="fw-semibold text-success">
+                                        Update: {{ \Carbon\Carbon::parse($data['tanggal'])->format('d M Y') }}
+                                    </small>
+                                @else
+                                    <small class="text-danger fw-bold">Belum ada data</small>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                @endforeach
-
-            </div>
+                </div>
+            @endforeach
         </div>
+        {{-- End Grid Card Meteran --}}
 
-        {{-- Carousel DCP --}}
-        @php
-            $chunks = $dcpReports->chunk(3);
-        @endphp
-
-        <div id="carouselDcp" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-pause="false"
-            data-bs-interval="8000">
-            <h4 class="fw-bold text-primary mb-3">
-                <i class="bi bi-collection-play me-1"></i> DCP Reports Update
-            </h4>
-
-            <div class="carousel-inner">
-                @foreach ($chunks as $index => $group)
-                    <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                        <div class="row justify-content-center">
-                            @foreach ($group as $item)
-                                <div class="col-md-3 mb-3">
-                                    <div class="card border h-100 card-modern">
-                                        <div class="card-body">
-                                            <h6 class="card-title text-primary">
-                                                <i class="bi bi-film me-1"></i>
-                                                {{ $item->film_details[0]['judulFilm'] ?? '-' }}
-                                            </h6>
-                                            <p class="mb-1">Penerima: <strong>{{ $item->nama_penerima }}</strong></p>
-                                            <p class="mb-0">Tanggal:
-                                                <strong>{{ \Carbon\Carbon::parse($item->tanggal_penerimaan)->format('d M Y') }}</strong>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            {{-- Tambah card kosong jika kurang dari 3 --}}
-                            @for ($i = 0; $i < 2 - $group->count(); $i++)
-                                <div class="col-md-4 mb-3">
-                                    <div class="card h-100 border-0 bg-transparent"></div>
-                                </div>
-                            @endfor
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
 
 
         {{-- Notifikasi Tambahan --}}
@@ -197,20 +208,22 @@
         @endif
 
     </div>
+    {{-- End Carousel Meteran --}}
 @endsection
 
-@section('scripts')
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
-        new bootstrap.Carousel(document.querySelector('#carouselMeteran'), {
-            interval: 4500,
-            ride: 'carousel',
-            pause: false
-        });
-        new bootstrap.Carousel(document.querySelector('#carouselDcp'), {
-            interval: 8000,
-            ride: 'carousel',
-            wrap: true,
-            pause: false
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('#carouselDcp');
+            if (carousel) {
+                new bootstrap.Carousel(carousel, {
+                    interval: 8000,
+                    ride: 'carousel',
+                    wrap: true
+                });
+            }
         });
     </script>
 
@@ -237,5 +250,52 @@
         }
     </style>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-@endsection
+    <style>
+        .text-shadow {
+            text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .object-fit-cover {
+            object-fit: cover;
+        }
+    </style>
+
+    <style>
+        .dcp-card {
+            width: 250px !important;
+            flex-shrink: 0;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .poster-wrapper {
+            width: 100%;
+            height: 280px !important;
+            /* Diperkecil dari sebelumnya */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f9fa;
+            overflow: hidden;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .poster-img {
+            height: 100%;
+            width: auto;
+            object-fit: contain;
+            image-rendering: auto;
+        }
+
+        @media (max-width: 768px) {
+            .dcp-card {
+                width: 150px;
+            }
+
+            .poster-wrapper {
+                height: 220px;
+            }
+        }
+    </style>
+@endpush

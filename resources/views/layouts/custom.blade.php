@@ -9,7 +9,7 @@
     <link rel="icon" href="{{ asset('assets/images/favicon.ico') }}" type="image/x-icon">
 
     <!-- Bootstrap & Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@800&display=swap" rel="stylesheet">
@@ -105,7 +105,7 @@
         }
     </style>
 
-    @stack('styles')
+    @stack('scripts')
 </head>
 
 <body class="bg-gray-100 min-h-screen d-flex flex-column">
@@ -139,9 +139,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item {{ request()->routeIs('meteran.input') ? 'active' : '' }}"
-                                    href="{{ route('meteran.input') }}">Input Data Meteran</a></li>
+                                    href="{{ route('meteran.input') }}">Form Data Meteran</a></li>
                             <li><a class="dropdown-item {{ request()->routeIs('laporan.index') ? 'active' : '' }}"
-                                    href="{{ route('laporan.index') }}">Rekap Data Meteran</a></li>
+                                    href="{{ route('laporan.index') }}">Laporan Data Meteran</a></li>
                             <li><a class="dropdown-item" href="{{ route('dashboard') }}">Grafik Pemakaian</a></li>
                         </ul>
                     </li>
@@ -152,9 +152,9 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item {{ request()->routeIs('dcp.form') ? 'active' : '' }}"
-                                    href="{{ route('dcp.form') }}">Penerimaan DCP</a></li>
+                                    href="{{ route('dcp.form') }}">Form Penerimaan DCP</a></li>
                             <li><a class="dropdown-item {{ request()->routeIs('onesheet.form') ? 'active' : '' }}"
-                                    href="{{ route('onesheet.form') }}">Penerimaan Onesheet/Poster</a></li>
+                                    href="{{ route('onesheet.form') }}">Form Penerimaan Onesheet/Poster</a></li>
                             <li><a class="dropdown-item {{ request()->routeIs('dcp.laporan') ? 'active' : '' }}"
                                     href="{{ route('dcp.laporan') }}">Laporan DCP</a></li>
                             <li><a class="dropdown-item {{ request()->routeIs('onesheet.laporan') ? 'active' : '' }}"
@@ -162,27 +162,27 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle text-white" id="maintenanceDropdown"
+                        <a href="#" class="nav-link dropdown-toggle text-white" id="troubleshootingDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-tools me-1"></i> Maintenance
+                            <i class="bi bi-tools me-1"></i> Troubleshooting
                         </a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="{{ route('maintenance.projector.form') }}"
                                     class="dropdown-item {{ request()->routeIs('maintenance.projector.form') ? 'active' : '' }}">
-                                    Projector & Sound Sytem
+                                    Form Maintenance Projector
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('maintenance.hvac.form') }}"
                                     class="dropdown-item {{ request()->routeIs('maintenance.hvac.form') ? 'active' : '' }}">
-                                    HVAC
+                                    Form Maintenance HVAC
                                 </a>
                             </li>
                             <li><a class="dropdown-item" href="{{ route('maintenance.projector.laporan') }}">Laporan
-                                    Projector</a></li>
+                                    Troubleshooting Projector</a></li>
                             <li><a class="dropdown-item" href="{{ route('maintenance.hvac.laporan') }}">Laporan
-                                    HVAC</a></li>
+                                    Troubleshooting HVAC</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -222,7 +222,7 @@
         </a>. All rights reserved.
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     @stack('scripts')
 </body>
