@@ -45,11 +45,11 @@
     @endphp
 
     <div class="container-fluid px-4">
-        <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="8000">
-            <h2 class="fw-bold display-6 text-center text-md-center mb-4"
-                style="font-size: clamp(35px, 6vw, 50px); color: rgb(216, 194, 68); letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif; text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);">
-                {{ Auth::user()->nama_bioskop ?? 'Dashboard' }}
-            </h2>
+        <h2 class="fw-bold display-6 text-center text-md-center mb-4"
+            style="font-size: clamp(35px, 6vw, 50px); color: rgb(216, 194, 68); letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif; text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);">
+            {{ Auth::user()->nama_bioskop ?? 'Dashboard' }}
+        </h2>
+        <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-pause="false" data-bs-interval="8000">
             <h4 class="fw-bold text-primary mb-3">
                 <i class="bi bi-collection-play me-1"></i> DCP Reports Update
             </h4>
@@ -219,7 +219,7 @@
             const carousel = document.querySelector('#carouselDcp');
             if (carousel) {
                 new bootstrap.Carousel(carousel, {
-                    interval: 8000,
+                    interval: 4000,
                     ride: 'carousel',
                     wrap: true
                 });

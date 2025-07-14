@@ -48,6 +48,7 @@ class DashboardController extends Controller
     // DCP Report
     $dcpReports = DcpReport::where('admin_id', $adminId)
       ->latest()
+      ->take(12)
       ->get();
 
     foreach ($dcpReports as $report) {
