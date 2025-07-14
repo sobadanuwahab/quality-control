@@ -3,7 +3,7 @@
 @php use Illuminate\Support\Facades\Auth; @endphp
 
 @section('content')
-
+    {{-- Notifikasi Service --}}
     @if ($notifService->count())
         <div class="alert alert-warning">
             <strong>⚠️ Perhatian:</strong> Sudah memasuki waktu service unit HVAC berikut:
@@ -29,6 +29,7 @@
             </ul>
         </div>
     @endif
+    {{-- End Notifikasi Service --}}
 
     {{-- Carousel DCP --}}
     @php
@@ -162,8 +163,6 @@
         </div>
         {{-- End Grid Card Meteran --}}
 
-
-
         {{-- Notifikasi Tambahan --}}
         @if ($notifUmum->count())
             <div class="mt-5">
@@ -206,9 +205,8 @@
                 </div>
             </div>
         @endif
-
     </div>
-    {{-- End Carousel Meteran --}}
+    {{-- End Notifikasi Tambahan --}}
 @endsection
 
 @push('scripts')

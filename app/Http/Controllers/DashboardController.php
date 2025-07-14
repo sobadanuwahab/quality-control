@@ -21,9 +21,9 @@ class DashboardController extends Controller
     $jenis_meteran = [
       'Meteran Listrik 1_WBP',
       'Meteran Listrik 1_LWBP',
+      'Meteran Listrik Single 1',
       'Meteran Listrik 2_WBP',
       'Meteran Listrik 2_LWBP',
-      'Meteran Listrik Single 1',
       'Meteran Listrik Single 2',
       'Meteran Air',
       'Meteran Gas'
