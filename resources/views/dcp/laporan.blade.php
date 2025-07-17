@@ -30,23 +30,28 @@
 
 @push('scripts')
     <script>
-        let timeout = null;
+        document.addEventListener("DOMContentLoaded", function() {
+            const input = document.getElementById('search-input');
+            if (!input) return; // proteksi kalau input tidak ada
 
-        document.getElementById('search-input').addEventListener('input', function() {
-            clearTimeout(timeout);
-            const keyword = this.value;
+            let timeout = null;
 
-            timeout = setTimeout(() => {
-                fetch(`{{ route('dcp.laporan') }}?search=${encodeURIComponent(keyword)}`, {
-                        headers: {
-                            'X-Requested-With': 'XMLHttpRequest'
-                        }
-                    })
-                    .then(res => res.text())
-                    .then(html => {
-                        document.getElementById('table-container').innerHTML = html;
-                    });
-            }, 300);
+            input.addEventListener('input', function() {
+                clearTimeout(timeout);
+                const keyword = this.value;
+
+                timeout = setTimeout(() => {
+                    fetch(`{{ route('dcp.laporan') }}?search=${encodeURIComponent(keyword)}`, {
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest'
+                            }
+                        })
+                        .then(res => res.text())
+                        .then(html => {
+                            document.getElementById('table-container').innerHTML = html;
+                        });
+                }, 300);
+            });
         });
     </script>
 @endpush
