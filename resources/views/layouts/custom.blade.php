@@ -51,8 +51,11 @@
             background-color: transparent;
         }
 
-        main {
+        .main-content {
             padding-top: 90px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .card {
@@ -108,16 +111,27 @@
     @stack('scripts')
 </head>
 
-<body class="bg-gray-100 min-h-screen d-flex flex-column">
+<body class="bg-gray-100 min-h-screen flex flex-col">
     @php use Illuminate\Support\Facades\Auth; @endphp
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
-        <div class="container-fluid px-4 py-2">
-            <a class="navbar-brand d-flex align-items-center" href="https://cinema21.co.id" target="_blank">
+        <div class="container-fluid px-4 py-2 d-flex align-items-center gap-3">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center m-0 p-0" href="https://cinema21.co.id" target="_blank">
                 <img src="{{ asset('assets/images/cinemaxxi.png') }}" alt="Logo" height="27"
-                    class="d-inline-block align-text-top me-3">
+                    class="d-inline-block align-text-top">
             </a>
+
+            <!-- Garis Pemisah -->
+            <div class="mx-3"
+                style="width: 2px; height: 30px; background-color: rgb(255, 255, 255); display: inline-block;"></div>
+
+            <!-- Nama Bioskop -->
+            <span class="fw-bold"
+                style="font-size: 1.1rem; color: rgb(255, 255, 255); letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif; text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);">
+                {{ Auth::user()->nama_bioskop ?? 'Dashboard' }}
+            </span>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -211,11 +225,11 @@
     </nav>
 
     <!-- Page Content -->
-    <main class="flex-grow container-fluid py-5 px-4 mt-5">
+    <main class="main-content container px-4 w-full mx-auto">
         @yield('content')
     </main>
 
-    <footer class="text-center py-4">
+    <footer class="text-center py-3">
         &copy; {{ date('Y') }}
         <a href="https://sobadanu.com" target="_blank">
             Soba Danu | Web Developer

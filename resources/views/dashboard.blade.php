@@ -41,35 +41,31 @@
             return $item;
         });
 
-        // Bagi semua data DCP jadi grup isi 6
-        $chunks = $dcpReports->chunk(6);
+        // Bagi semua data DCP jadi grup isi 4
+        $chunks = $dcpReports->chunk(4);
     @endphp
 
     <div class="container-fluid px-4">
-        <h2 class="fw-bold display-6 text-center text-md-center mb-4"
-            style="font-size: clamp(35px, 6vw, 50px); color: rgb(216, 194, 68); letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif; text-shadow: 2px 3px 2px rgba(0, 0, 0, 0.5);">
-            {{ Auth::user()->nama_bioskop ?? 'Dashboard' }}
-        </h2>
         <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-pause="false" data-bs-interval="8000">
             <h4 class="fw-bold text-primary mb-3">
                 <i class="bi bi-collection-play me-1"></i> DCP Reports Update
             </h4>
 
-            <div class="carousel-inner rounded shadow overflow-hidden">
+            <div class="carousel-inner w-full h-[400px] overflow-hidden">
                 @foreach ($chunks as $index => $group)
-                    <div class="carousel-item {{ $loop->first ? 'active' : '' }}">
-                        <div class="d-flex justify-content-center gap-3 flex-wrap py-4 px-3">
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }} w-full h-full">
+                        <div class="d-flex justify-content-center gap-4 flex-wrap py-4 px-3 overflow-y-auto h-full">
                             @foreach ($group as $item)
-                                <div class="card card-modern dcp-card">
+                                <div class="card card-modern dcp-card w-[200px]">
                                     @if (!empty($item->poster_url))
-                                        <div class="poster-wrapper">
+                                        <div class="poster-wrapper w-full h-[250px] overflow-hidden">
                                             <img src="{{ $item->poster_url }}"
                                                 alt="Poster {{ $item->film_details[0]['judulFilm'] ?? 'Film' }}"
-                                                class="poster-img">
+                                                class="poster-img w-full h-full object-cover">
                                         </div>
                                     @endif
                                     <div class="card-body">
-                                        <h6 class="card-title text-primary mb-2">
+                                        <h6 class="card-title text-primary mb-0">
                                             <i class="bi bi-film me-1"></i> {{ $item->film_details[0]['judulFilm'] ?? '-' }}
                                         </h6>
                                         <p class="mb-1 text-muted">Penerima:
@@ -85,6 +81,7 @@
                     </div>
                 @endforeach
             </div>
+
 
             @if ($chunks->count() > 1)
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselDcp" data-bs-slide="prev">

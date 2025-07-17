@@ -1,29 +1,31 @@
 @extends('layouts.custom')
 
 @section('content')
-    <div class="container mt-4">
+    <main class="flex-grow p-4">
+        <div class="container mx-auto">
 
-        <h2 class="mb-4 fw-bold text-primary">
-            <i class="bi bi-clipboard2-data me-2"></i> Laporan Penerimaan DCP
-        </h2>
+            <h2 class="mb-4 fw-bold text-primary">
+                <i class="bi bi-clipboard2-data me-2"></i> Laporan Penerimaan DCP
+            </h2>
 
-        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-            <a href="{{ route('dcp.laporan.pdf') }}" class="btn btn-danger">
-                <i class="bi bi-file-earmark-pdf-fill me-1"></i> Export PDF
-            </a>
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+                <a href="{{ route('dcp.laporan.pdf') }}" class="btn btn-danger">
+                    <i class="bi bi-file-earmark-pdf-fill me-1"></i> Export PDF
+                </a>
 
-            <div class="col-auto">
-                <input type="text" name="search" id="search-input" class="form-control me-1" placeholder="Search data..."
-                    style="max-width: 550px; min-width: 450px;">
+                <div class="col-auto">
+                    <input type="text" name="search" id="search-input" class="form-control me-1"
+                        placeholder="Search data..." style="max-width: 550px; min-width: 450px;">
+                </div>
+            </div>
+
+            <div class="table-responsive card shadow-sm p-3">
+                <div id="table-container">
+                    @include('dcp.table', ['dcpList' => $dcpList])
+                </div>
             </div>
         </div>
-
-        <div class="table-responsive card shadow-sm p-3">
-            <div id="table-container">
-                @include('dcp.table', ['dcpList' => $dcpList])
-            </div>
-        </div>
-    </div>
+    </main>
 @endsection
 
 @push('scripts')

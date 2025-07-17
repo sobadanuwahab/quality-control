@@ -1,85 +1,89 @@
 @extends('layouts.custom')
 
 @section('content')
-    <div class="container mt-4">
-        <h2 class="mb-4 fw-bold text-primary">
-            <i class="bi bi-tools me-2"></i>Form Maintenance Projector & Sound System
-        </h2>
+    <main class="flex-grow p-4">
+        <div class="container mx-auto">
 
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
-                {{ session('success') }}</div>
-        @endif
+            {{-- Title Section --}}
+            <h2 class="mb-4 fw-bold text-primary">
+                <i class="bi bi-tools me-2"></i>Form Maintenance Projector & Sound System
+            </h2>
 
-        <form method="POST" action="{{ route('maintenance.projector.store') }}">
-            @csrf
+            @if (session('success'))
+                <div class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
+                    {{ session('success') }}</div>
+            @endif
 
-            {{-- Input Tanggal --}}
-            <div class="mb-3">
-                <label for="tanggal" class="form-label">Tanggal Penerimaan</label>
-                <input type="date" name="tanggal" id="tanggal" class="form-control"
-                    value="{{ old('tanggal', \Carbon\Carbon::now()->format('Y-m-d')) }}" required>
-            </div>
+            <form method="POST" action="{{ route('maintenance.projector.store') }}">
+                @csrf
 
-            {{-- Input Deskripsi --}}
-            <div class="mb-3">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <input type="text" class="form-control" name="deskripsi" id="deskripsi" required>
-            </div>
+                {{-- Input Tanggal --}}
+                <div class="mb-3">
+                    <label for="tanggal" class="form-label">Tanggal Penerimaan</label>
+                    <input type="date" name="tanggal" id="tanggal" class="form-control"
+                        value="{{ old('tanggal', \Carbon\Carbon::now()->format('Y-m-d')) }}" required>
+                </div>
 
-            {{-- Pilihan Jenis Perangkat --}}
-            <div class="mb-3">
-                <label for="jenis_perangkat" class="form-label">Jenis Perangkat</label>
-                <select name="jenis_perangkat" id="jenis_perangkat" class="form-select" required>
-                    <option value="" disabled selected>-- Pilih Jenis Perangkat --</option>
-                    <option value="Projector">Projector</option>
-                    <option value="Sound System">Sound System</option>
-                    <option value="Server">Server</option>
-                    <option value="Lain-lain">Lain-lain</option>
-                </select>
-            </div>
+                {{-- Input Deskripsi --}}
+                <div class="mb-3">
+                    <label for="deskripsi" class="form-label">Deskripsi</label>
+                    <input type="text" class="form-control" name="deskripsi" id="deskripsi" required>
+                </div>
 
-            {{-- Input Type/Merk --}}
-            <div class="mb-3">
-                <label for="type" class="form-label">Type/Merk</label>
-                <input type="text" class="form-control" name="type" id="type" required>
-            </div>
+                {{-- Pilihan Jenis Perangkat --}}
+                <div class="mb-3">
+                    <label for="jenis_perangkat" class="form-label">Jenis Perangkat</label>
+                    <select name="jenis_perangkat" id="jenis_perangkat" class="form-select" required>
+                        <option value="" disabled selected>-- Pilih Jenis Perangkat --</option>
+                        <option value="Projector">Projector</option>
+                        <option value="Sound System">Sound System</option>
+                        <option value="Server">Server</option>
+                        <option value="Lain-lain">Lain-lain</option>
+                    </select>
+                </div>
 
-            {{-- Pilihan Studio --}}
-            <div class="mb-3">
-                <label for="studio" class="form-label">Studio</label>
-                <select name="studio" id="studio" class="form-select" required>
-                    <option value="" disabled selected>-- Pilih Studio --</option>
-                    <option value="Studio 1">Studio 1</option>
-                    <option value="Studio 2">Studio 2</option>
-                    <option value="Studio 3">Studio 3</option>
-                    <option value="Studio 4">Studio 4</option>
-                    <option value="Studio 5">Studio 5</option>
-                    <option value="Studio 6">Studio 6</option>
-                    <option value="Studio Premiere 1">Studio Premiere 1</option>
-                    <option value="Studio Premiere 2">Studio Premiere 2</option>
-                    <option value="Studio IMAX">Studio IMAX</option>
-                </select>
-            </div>
+                {{-- Input Type/Merk --}}
+                <div class="mb-3">
+                    <label for="type" class="form-label">Type/Merk</label>
+                    <input type="text" class="form-control" name="type" id="type" required>
+                </div>
 
-            {{-- Input Komponen/Barang yang Diganti --}}
-            <div class="mb-3">
-                <label for="komponen_diganti" class="form-label">Barang / Komponen yang Diganti</label>
-                <input type="text" class="form-control" name="komponen_diganti" id="komponen_diganti" required>
-            </div>
+                {{-- Pilihan Studio --}}
+                <div class="mb-3">
+                    <label for="studio" class="form-label">Studio</label>
+                    <select name="studio" id="studio" class="form-select" required>
+                        <option value="" disabled selected>-- Pilih Studio --</option>
+                        <option value="Studio 1">Studio 1</option>
+                        <option value="Studio 2">Studio 2</option>
+                        <option value="Studio 3">Studio 3</option>
+                        <option value="Studio 4">Studio 4</option>
+                        <option value="Studio 5">Studio 5</option>
+                        <option value="Studio 6">Studio 6</option>
+                        <option value="Studio Premiere 1">Studio Premiere 1</option>
+                        <option value="Studio Premiere 2">Studio Premiere 2</option>
+                        <option value="Studio IMAX">Studio IMAX</option>
+                    </select>
+                </div>
 
-            {{-- Input Keterangan --}}
-            <div class="mb-3">
-                <label for="keterangan" class="form-label">Keterangan</label>
-                <textarea class="form-control" name="keterangan" id="keterangan" rows="4"
-                    placeholder="Tuliskan detail perawatan atau kendala teknis..."></textarea>
-            </div>
+                {{-- Input Komponen/Barang yang Diganti --}}
+                <div class="mb-3">
+                    <label for="komponen_diganti" class="form-label">Barang / Komponen yang Diganti</label>
+                    <input type="text" class="form-control" name="komponen_diganti" id="komponen_diganti" required>
+                </div>
 
-            <button type="submit" class="btn btn-primary">
-                <i class="bi bi-save me-1"></i> Simpan
-            </button>
-        </form>
-    </div>
+                {{-- Input Keterangan --}}
+                <div class="mb-3">
+                    <label for="keterangan" class="form-label">Keterangan</label>
+                    <textarea class="form-control" name="keterangan" id="keterangan" rows="4"
+                        placeholder="Tuliskan detail perawatan atau kendala teknis..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save me-1"></i> Simpan
+                </button>
+            </form>
+        </div>
+    </main>
 @endsection
 
 @push('scripts')
