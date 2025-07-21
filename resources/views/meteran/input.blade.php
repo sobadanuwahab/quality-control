@@ -73,6 +73,7 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const selectMeteran = document.querySelector('select[name="nama_meteran"]');
                 const awalInput = document.querySelector('input[name="awal"]');
+                const lastAkhirUrl = "{{ route('meteran.last-akhir') }}"; // <- Blade dievaluasi dulu
 
                 selectMeteran.addEventListener('change', async function() {
                     const selected = this.value;
@@ -80,7 +81,7 @@
 
                     try {
                         const res = await fetch(
-                            `{{ route('meteran.last-akhir') }}?nama_meteran=${encodeURIComponent(selected)}`
+                            `${lastAkhirUrl}?nama_meteran=${encodeURIComponent(selected)}`
                         );
                         const data = await res.json();
                         if (data.akhir !== undefined) {
@@ -90,39 +91,6 @@
                         console.error("Gagal mengambil data terakhir:", err);
                     }
                 });
-            });
-        </script>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const selectMeteran = document.querySelector('select[name="nama_meteran"]');
-                const awalInput = document.querySelector('input[name="awal"]');
-
-                selectMeteran.addEventListener('change', async function() {
-                    const selected = this.value;
-                    if (!selected) return;
-
-                    try {
-                        const res = await fetch(
-                            `{{ route('meteran.last-akhir') }}?nama_meteran=${encodeURIComponent(selected)}`
-                        );
-                        const data = await res.json();
-                        if (data.akhir !== undefined) {
-                            awalInput.value = data.akhir;
-                        }
-                    } catch (err) {
-                        console.error("Gagal mengambil data terakhir:", err);
-                    }
-                });
-
-                // Auto-hide success alert after 5 seconds
-                const successAlert = document.querySelector('.alert-success');
-                if (successAlert) {
-                    setTimeout(() => {
-                        successAlert.classList.add('fade');
-                        successAlert.addEventListener('transitionend', () => successAlert.remove());
-                    }, 5000);
-                }
             });
         </script>
     @endpush
