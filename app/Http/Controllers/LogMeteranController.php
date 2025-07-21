@@ -12,12 +12,13 @@ class LogMeteranController extends Controller
   {
     $namaMeteran = $request->query('nama_meteran');
 
-    $last = \App\Models\LogMeteran::where('nama_meteran', $namaMeteran)
-      ->orderBy('tanggal', 'desc')
+    $data = \App\Models\LogMeteran::where('nama_meteran', $namaMeteran)
+      ->where('admin_id', auth()->id())
+      ->orderByDesc('tanggal')
       ->first();
 
     return response()->json([
-      'akhir' => $last ? $last->akhir : 0
+      'akhir' => $data ? $data->akhir : null
     ]);
   }
 
