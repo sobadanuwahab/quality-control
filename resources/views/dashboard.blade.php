@@ -236,12 +236,20 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        let carouselInstance = null;
+
+        function pauseCarousel() {
+            if (carouselInstance) carouselInstance.pause();
+        }
+
+        function resumeCarousel() {
+            if (carouselInstance) carouselInstance.cycle();
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             const carousel = document.querySelector('#carouselDcp');
-            let carouselInstance;
 
             if (carousel) {
-                // Inisialisasi carousel manual
                 carouselInstance = new bootstrap.Carousel(carousel, {
                     interval: 8000,
                     ride: 'carousel',
@@ -250,18 +258,17 @@
 
                 // Tambahkan event mouse ke setiap card
                 document.querySelectorAll('.dcp-card').forEach(card => {
-                    card.addEventListener('mouseenter', () => {
-                        carouselInstance.pause();
-                    });
-                    card.addEventListener('mouseleave', () => {
-                        carouselInstance.cycle();
-                    });
+                    card.addEventListener('mouseenter', pauseCarousel);
+                    card.addEventListener('mouseleave', resumeCarousel);
                 });
             }
-        });
-    </script>
 
-    <script>
+            // Reset trailer saat modal ditutup
+            document.getElementById('trailerModal')?.addEventListener('hidden.bs.modal', () => {
+                document.getElementById('trailerIframe').src = '';
+            });
+        });
+
         async function openTrailerModal(card) {
             const title = card.dataset.title;
             const modal = new bootstrap.Modal(document.getElementById('trailerModal'));
@@ -269,7 +276,6 @@
             const apiKey = 'b39ee8339b496cd2eca8e838f79dcddf';
 
             try {
-                // 1. Cari film berdasarkan judul
                 const search = await fetch(
                     `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(title)}`
                 );
@@ -281,10 +287,13 @@
                     return;
                 }
 
-                // 2. Ambil trailer dari movie ID
-                const videos = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}`);
+                const videos = await fetch(
+                    `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}`
+                );
                 const videoData = await videos.json();
-                const trailer = videoData.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+                const trailer = videoData.results.find(
+                    v => v.type === 'Trailer' && v.site === 'YouTube'
+                );
 
                 if (trailer) {
                     const embedUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&rel=0`;
@@ -297,24 +306,6 @@
                 console.error('Gagal mengambil trailer:', err);
                 alert('Terjadi kesalahan saat mengambil trailer.');
             }
-        }
-
-        // Reset trailer saat modal ditutup
-        document.getElementById('trailerModal').addEventListener('hidden.bs.modal', () => {
-            document.getElementById('trailerIframe').src = '';
-        });
-    </script>
-
-    <script>
-        const carousel = document.querySelector('#carouselDcp');
-        const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carousel);
-
-        function pauseCarousel() {
-            carouselInstance.pause();
-        }
-
-        function resumeCarousel() {
-            carouselInstance.cycle(); // lanjutkan autoplay
         }
     </script>
 
@@ -339,9 +330,7 @@
         .card-modern .card-body {
             padding: 1rem 1.25rem;
         }
-    </style>
 
-    <style>
         .text-shadow {
             text-shadow: 2px 3px 5px rgba(0, 0, 0, 0.8);
         }
@@ -349,9 +338,7 @@
         .object-fit-cover {
             object-fit: cover;
         }
-    </style>
 
-    <style>
         .dcp-card {
             width: 250px !important;
             flex-shrink: 0;
@@ -363,7 +350,6 @@
         .poster-wrapper {
             width: 100%;
             height: 280px !important;
-            /* Diperkecil dari sebelumnya */
             display: flex;
             justify-content: center;
             align-items: center;
