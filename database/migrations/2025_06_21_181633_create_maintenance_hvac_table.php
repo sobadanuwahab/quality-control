@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+  /*
     public function up(): void
     {
         Schema::create('maintenance_hvac', function (Blueprint $table) {
@@ -28,4 +29,5 @@ return new class extends Migration
     {
         Schema::dropIfExists('maintenance_hvac');
     }
+        */
 };
