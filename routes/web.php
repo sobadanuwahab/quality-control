@@ -3,15 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\{
-    ProfileController,
-    DashboardController,
-    LogMeteranController,
-    LaporanController,
-    MeteranController,
-    UserController,
-    DcpController,
-    OnesheetController,
-    MaintenanceController
+  ProfileController,
+  DashboardController,
+  LogMeteranController,
+  LaporanController,
+  MeteranController,
+  UserController,
+  DcpController,
+  OnesheetController,
+  MaintenanceController
 };
 
 // Arahkan root ke halaman login
@@ -19,58 +19,59 @@ Route::get('/', fn() => redirect('/login'));
 
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])->name('dashboard');
+  ->middleware(['auth', 'verified'])->name('dashboard');
 
 // Profile (Laravel Breeze default)
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+  Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+  Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+  Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // Meteran Input
 Route::middleware('auth')->group(function () {
-    Route::get('/meteran/input', [LogMeteranController::class, 'create'])->name('meteran.input');
-    Route::post('/meteran/input', [LogMeteranController::class, 'store'])->name('meteran.store');
+  Route::get('/meteran/input', [LogMeteranController::class, 'create'])->name('meteran.input');
+  Route::post('/meteran/input', [LogMeteranController::class, 'store'])->name('meteran.store');
+  Route::get('/meteran/last-akhir', [LogMeteranController::class, 'lastAkhir'])->name('meteran.last-akhir');
 });
 
 // Laporan
 Route::get('/laporan', [LaporanController::class, 'index'])
-    ->middleware('auth')->name('laporan.index');
+  ->middleware('auth')->name('laporan.index');
 
 // AJAX - Ambil data terakhir meteran
 Route::get('/meteran/last-akhir', [MeteranController::class, 'getLastAkhir'])
-    ->middleware('auth');
+  ->middleware('auth');
 
 // Ubah Password
 Route::middleware('auth')->group(function () {
-    Route::get('/ubah-password', [UserController::class, 'editPassword'])->name('password.admin.change');
-    Route::put('/ubah-password', [UserController::class, 'updatePassword'])->name('password.admin.update');
+  Route::get('/ubah-password', [UserController::class, 'editPassword'])->name('password.admin.change');
+  Route::put('/ubah-password', [UserController::class, 'updatePassword'])->name('password.admin.update');
 });
 
 Route::get('/laporan/pdf', [LaporanController::class, 'exportPdf'])->name('laporan.pdf');
 
 Route::get('/lokasi-daerah', function () {
-    $lat = request('lat');
-    $lon = request('lon');
+  $lat = request('lat');
+  $lon = request('lon');
 
-    if (!$lat || !$lon) {
-        return response()->json(['error' => 'Latitude dan longitude diperlukan'], 400);
-    }
+  if (!$lat || !$lon) {
+    return response()->json(['error' => 'Latitude dan longitude diperlukan'], 400);
+  }
 
-    $response = Http::withHeaders([
-        'User-Agent' => 'MeteranApp/1.0 (admin@yourdomain.com)'
-    ])->get('https://nominatim.openstreetmap.org/reverse', [
-        'format' => 'json',
-        'lat' => $lat,
-        'lon' => $lon,
-    ]);
+  $response = Http::withHeaders([
+    'User-Agent' => 'MeteranApp/1.0 (admin@yourdomain.com)'
+  ])->get('https://nominatim.openstreetmap.org/reverse', [
+    'format' => 'json',
+    'lat' => $lat,
+    'lon' => $lon,
+  ]);
 
-    return $response->json();
+  return $response->json();
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dcp/form', [\App\Http\Controllers\DcpController::class, 'form'])->name('dcp.form');
+  Route::get('/dcp/form', [\App\Http\Controllers\DcpController::class, 'form'])->name('dcp.form');
 });
 
 Route::get('/dcp/laporan', [DcpController::class, 'laporan'])->name('dcp.laporan');
@@ -102,8 +103,8 @@ Route::patch('/maintenance/hvac/{id}/done', [MaintenanceController::class, 'mark
 
 // Export PDF Maintenance
 Route::get('/maintenance/projector/laporan/pdf', [MaintenanceController::class, 'exportProjectorPdf'])
-    ->name('maintenance.projector.pdf');
+  ->name('maintenance.projector.pdf');
 Route::get('/maintenance/hvac/laporan/pdf', [MaintenanceController::class, 'exportHvacPdf'])
-    ->name('maintenance.hvac.pdf');
+  ->name('maintenance.hvac.pdf');
 
 require __DIR__ . '/auth.php';
