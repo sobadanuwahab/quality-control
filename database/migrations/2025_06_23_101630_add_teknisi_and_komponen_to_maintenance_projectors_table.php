@@ -6,9 +6,10 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+  /**
+   * Run the migrations.
+   */
+  /*
     public function up(): void
     {
         Schema::table('maintenance_projectors', function (Blueprint $table) {
@@ -16,14 +17,17 @@ return new class extends Migration
             $table->string('komponen_diganti')->nullable()->after('studio');
         });
     }
+    */
 
-    /**
-     * Reverse the migrations.
-     */
+  /**
+   * Reverse the migrations.
+   */
+  /*
     public function down(): void
     {
         Schema::table('maintenance_projectors', function (Blueprint $table) {
             $table->dropColumn(['teknisi', 'komponen_diganti']);
         });
     }
+    */
 };
