@@ -104,7 +104,8 @@
 
                     try {
                         const res = await fetch(
-                            `/meteran/last-akhir?nama_meteran=${encodeURIComponent(selected)}`);
+                            `{{ route('meteran.last-akhir') }}?nama_meteran=${encodeURIComponent(selected)}`
+                        );
                         const data = await res.json();
                         if (data.akhir !== undefined) {
                             awalInput.value = data.akhir;
