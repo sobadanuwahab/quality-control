@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+
+  /**
+   * Run the migrations.
+   */
+  /*
     public function up(): void
     {
         Schema::create('dcp_reports', function (Blueprint $table) {
@@ -23,12 +25,15 @@ return new class extends Migration
     $table->foreign('admin_id')->references('id')->on('admin')->onDelete('cascade');
         });
     }
+    */
 
-    /**
-     * Reverse the migrations.
-     */
+  /**
+   * Reverse the migrations.
+   */
+  /*
     public function down(): void
     {
         Schema::dropIfExists('dcp_reports');
     }
+    */
 };
