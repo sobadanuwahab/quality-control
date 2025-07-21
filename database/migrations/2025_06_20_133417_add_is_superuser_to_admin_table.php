@@ -6,23 +6,27 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+  /**
+   * Run the migrations.
+   */
+  /*
     public function up(): void
     {
         Schema::table('admin', function (Blueprint $table) {
             $table->boolean('is_superuser')->default(false);
         });
     }
+    */
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
+  /**
+   * Reverse the migrations.
+   */
+  public function down(): void
+  {
+    /*
         Schema::table('admin', function (Blueprint $table) {
             //
         });
-    }
+      */
+  }
 };
