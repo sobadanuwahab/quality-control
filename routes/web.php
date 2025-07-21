@@ -32,9 +32,8 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
   Route::get('/meteran/input', [LogMeteranController::class, 'create'])->name('meteran.input');
   Route::post('/meteran/input', [LogMeteranController::class, 'store'])->name('meteran.store');
+  Route::get('/meteran/last-akhir', [LogMeteranController::class, 'lastAkhir'])->name('meteran.last-akhir');
 });
-
-Route::get('/meteran/last-akhir', [LogMeteranController::class, 'lastAkhir'])->name('meteran.last-akhir');
 
 // Laporan
 Route::get('/laporan', [LaporanController::class, 'index'])

@@ -13,7 +13,7 @@ class LogMeteranController extends Controller
     $namaMeteran = $request->query('nama_meteran');
 
     $data = \App\Models\LogMeteran::where('nama_meteran', $namaMeteran)
-      ->where('admin_id', auth()->id())
+      ->where('admin_id', Auth::id())
       ->orderByDesc('tanggal')
       ->first();
 
