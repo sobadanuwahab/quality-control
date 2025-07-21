@@ -64,18 +64,22 @@
             box-shadow: 4px 2px 2px rgba(0, 0, 0, 0.2);
         }
 
-        footer {
-            background-color: #0b0c10;
-            color: #bbb;
-        }
-
-        footer a {
-            color: #00d1b2;
-            text-decoration: none;
-        }
-
-        footer a:hover {
+        .hover-link:hover {
+            color: #0dcaf0 !important;
+            /* Bootstrap info color */
             text-decoration: underline;
+        }
+
+        .hover-icon:hover {
+            color: #25d366 !important;
+            /* WhatsApp green */
+            transform: scale(1.2);
+            transition: 0.3s ease;
+        }
+
+        .hover-icon:nth-child(4):hover {
+            color: #333 !important;
+            /* GitHub dark gray */
         }
 
         /* Hilangkan efek blok pada hover untuk nav-link */
@@ -193,9 +197,11 @@
                                     Form Maintenance HVAC
                                 </a>
                             </li>
-                            <li><a class="dropdown-item" href="{{ route('maintenance.projector.laporan') }}">Laporan
+                            <li><a class="dropdown-item {{ request()->routeIs('maintenance.projector.laporan') ? 'active' : '' }}"
+                                    href="{{ route('maintenance.projector.laporan') }}">Laporan
                                     Troubleshooting Projector</a></li>
-                            <li><a class="dropdown-item" href="{{ route('maintenance.hvac.laporan') }}">Laporan
+                            <li><a class="dropdown-item {{ request()->routeIs('maintenance.hvac.laporan') ? 'active' : '' }}"
+                                    href="{{ route('maintenance.hvac.laporan') }}">Laporan
                                     Troubleshooting HVAC</a></li>
                         </ul>
                     </li>
@@ -225,15 +231,24 @@
     </nav>
 
     <!-- Page Content -->
-    <main class="main-content container px-4 w-full mx-auto">
+    <main class="main-content container px-40 w-full flex-grow-1 d-flex flex-column">
         @yield('content')
     </main>
 
-    <footer class="text-center py-3">
+    <footer class="text-center bg-dark py-3 text-white">
         &copy; {{ date('Y') }}
-        <a href="https://sobadanu.com" target="_blank">
-            Soba Danu | Web Developer
-        </a>. All rights reserved.
+        <a href="https://sobadanu.com" target="_blank"
+            class="text-white text-decoration-none fw-semibold hover-link">
+            SobaDanu_Full Stack Developer
+        </a>
+        &nbsp;|&nbsp;
+        <a href="https://github.com/sobadanuwahab" target="_blank" class="text-white mx-1 hover-icon">
+            <i class="bi bi-github"></i>
+        </a>
+        <a href="https://wa.me/6281314333352" target="_blank" class="text-white mx-1 hover-icon">
+            <i class="bi bi-whatsapp"></i>
+        </a>
+        <span class="d-block mt-1 small">All rights reserved.</span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

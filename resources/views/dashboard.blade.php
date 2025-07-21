@@ -3,6 +3,50 @@
 @php use Illuminate\Support\Facades\Auth; @endphp
 
 @section('content')
+    {{-- Notifikasi Tambahan --}}
+    @if ($notifUmum->count())
+        <div class="mt-5">
+            <h4 class="fw-bold text-primary mb-3">
+                <i class="bi bi-bell-fill me-1"></i> Notifikasi Terbaru
+            </h4>
+
+            <div class="row g-3">
+                @foreach ($notifUmum as $notif)
+                    @php
+                        // Mapping warna berdasarkan tipe
+                        $borderClass = match (strtolower($notif->tipe)) {
+                            'penting' => 'border-danger',
+                            'informasi' => 'border-info',
+                            'umum' => 'border-warning',
+                            default => 'border-secondary',
+                        };
+
+                        $iconClass = match (strtolower($notif->tipe)) {
+                            'penting' => 'bi-exclamation-triangle-fill text-danger',
+                            'informasi' => 'bi-info-circle-fill text-info',
+                            'umum' => 'bi-chat-left-dots-fill text-warning',
+                            default => 'bi-bell-fill text-secondary',
+                        };
+                    @endphp
+
+                    <div class="col-md-6">
+                        <div class="card card-modern border-start border-4 {{ $borderClass }} h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <h6 class="card-title text-dark mb-1">
+                                        <i class="bi {{ $iconClass }} me-1"></i> {{ $notif->judul }}
+                                    </h6>
+                                </div>
+                                <p class="mb-0 text-secondary">{{ $notif->isi }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+    {{-- End Notifikasi Tambahan --}}
+
     {{-- Notifikasi Service --}}
     @if ($notifService->count())
         <div class="alert alert-warning">
@@ -46,19 +90,25 @@
     @endphp
 
     <div class="container-fluid px-4">
-        <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-pause="false" data-bs-interval="8000">
-            <h4 class="fw-bold text-primary mb-3">
+        <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="8000">
+            <h4 class="fw-bold text-dark mb-3">
                 <i class="bi bi-collection-play me-1"></i> DCP Reports Update
             </h4>
 
             <div class="carousel-inner w-full h-[400px] overflow-hidden">
                 @foreach ($chunks as $index => $group)
                     <div class="carousel-item {{ $loop->first ? 'active' : '' }} w-full h-full">
-                        <div class="d-flex justify-content-center gap-4 flex-wrap py-4 px-3 overflow-y-auto h-full">
+                        <div class="d-flex justify-content-center gap-4 flex-wrap py-4 px-3 overflow-y-auto h-full"
+                            style="cursor: pointer" onmouseenter="pauseCarousel()" onmouseleave="resumeCarousel()">
                             @foreach ($group as $item)
-                                <div class="card card-modern dcp-card w-[200px]">
+                                <div class="card card-modern dcp-card w-[200px]" style="cursor: pointer"
+                                    data-title="{{ $item->film_details[0]['judulFilm'] ?? '' }}"
+                                    onclick="openTrailerModal(this)" onmouseenter="pauseCarousel()"
+                                    onmouseleave="resumeCarousel()">
                                     @if (!empty($item->poster_url))
-                                        <div class="poster-wrapper w-full h-[250px] overflow-hidden">
+                                        <div
+                                            class="poster-wrapper
+                                    w-full h-[250px] overflow-hidden">
                                             <img src="{{ $item->poster_url }}"
                                                 alt="Poster {{ $item->film_details[0]['judulFilm'] ?? 'Film' }}"
                                                 class="poster-img w-full h-full object-cover">
@@ -66,7 +116,8 @@
                                     @endif
                                     <div class="card-body">
                                         <h6 class="card-title text-primary mb-0">
-                                            <i class="bi bi-film me-1"></i> {{ $item->film_details[0]['judulFilm'] ?? '-' }}
+                                            <i class="bi bi-film me-1"></i>
+                                            {{ $item->film_details[0]['judulFilm'] ?? '-' }}
                                         </h6>
                                         <p class="mb-1 text-muted">Penerima:
                                             <strong>{{ $item->nama_penerima ?? '-' }}</strong>
@@ -92,12 +143,30 @@
                 </button>
             @endif
         </div>
+
+        <!-- Modal Trailer -->
+        <div class="modal fade" id="trailerModal" tabindex="-1" aria-labelledby="trailerModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content bg-dark text-white">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="trailerModalLabel">Trailer Film</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <iframe id="trailerIframe" width="100%" height="400" src="" frameborder="0"
+                            allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     {{-- End Carousel DCP --}}
 
     {{-- Carousel Meteran --}}
     <div class="container-fluid px-4">
-        <h4 class="fw-bold text-primary mb-3">
+        <h4 class="fw-bold text-dark mb-3">
             <i class="bi bi-speedometer2 me-1"></i> Meteran Reports Update
         </h4>
 
@@ -159,51 +228,8 @@
             @endforeach
         </div>
         {{-- End Grid Card Meteran --}}
-
-        {{-- Notifikasi Tambahan --}}
-        @if ($notifUmum->count())
-            <div class="mt-5">
-                <h4 class="fw-bold text-primary mb-3">
-                    <i class="bi bi-bell-fill me-1"></i> Notifikasi Terbaru
-                </h4>
-
-                <div class="row g-3">
-                    @foreach ($notifUmum as $notif)
-                        @php
-                            // Mapping warna berdasarkan tipe
-                            $borderClass = match (strtolower($notif->tipe)) {
-                                'penting' => 'border-danger',
-                                'informasi' => 'border-info',
-                                'umum' => 'border-warning',
-                                default => 'border-secondary',
-                            };
-
-                            $iconClass = match (strtolower($notif->tipe)) {
-                                'penting' => 'bi-exclamation-triangle-fill text-danger',
-                                'informasi' => 'bi-info-circle-fill text-info',
-                                'umum' => 'bi-chat-left-dots-fill text-warning',
-                                default => 'bi-bell-fill text-secondary',
-                            };
-                        @endphp
-
-                        <div class="col-md-6">
-                            <div class="card card-modern border-start border-4 {{ $borderClass }} h-100">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <h6 class="card-title text-dark mb-1">
-                                            <i class="bi {{ $iconClass }} me-1"></i> {{ $notif->judul }}
-                                        </h6>
-                                    </div>
-                                    <p class="mb-0 text-secondary">{{ $notif->isi }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
     </div>
-    {{-- End Notifikasi Tambahan --}}
+    {{-- End Carousel Meteran --}}
 @endsection
 
 @push('scripts')
@@ -212,14 +238,84 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const carousel = document.querySelector('#carouselDcp');
+            let carouselInstance;
+
             if (carousel) {
-                new bootstrap.Carousel(carousel, {
-                    interval: 4000,
+                // Inisialisasi carousel manual
+                carouselInstance = new bootstrap.Carousel(carousel, {
+                    interval: 8000,
                     ride: 'carousel',
                     wrap: true
                 });
+
+                // Tambahkan event mouse ke setiap card
+                document.querySelectorAll('.dcp-card').forEach(card => {
+                    card.addEventListener('mouseenter', () => {
+                        carouselInstance.pause();
+                    });
+                    card.addEventListener('mouseleave', () => {
+                        carouselInstance.cycle();
+                    });
+                });
             }
         });
+    </script>
+
+    <script>
+        async function openTrailerModal(card) {
+            const title = card.dataset.title;
+            const modal = new bootstrap.Modal(document.getElementById('trailerModal'));
+            const iframe = document.getElementById('trailerIframe');
+            const apiKey = 'b39ee8339b496cd2eca8e838f79dcddf';
+
+            try {
+                // 1. Cari film berdasarkan judul
+                const search = await fetch(
+                    `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(title)}`
+                );
+                const searchData = await search.json();
+                const movie = searchData.results?.[0];
+
+                if (!movie) {
+                    alert(`Film "${title}" tidak ditemukan di TMDb.`);
+                    return;
+                }
+
+                // 2. Ambil trailer dari movie ID
+                const videos = await fetch(`https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${apiKey}`);
+                const videoData = await videos.json();
+                const trailer = videoData.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+
+                if (trailer) {
+                    const embedUrl = `https://www.youtube.com/embed/${trailer.key}?autoplay=1&rel=0`;
+                    iframe.src = embedUrl;
+                    modal.show();
+                } else {
+                    alert(`Trailer tidak ditemukan untuk "${title}".`);
+                }
+            } catch (err) {
+                console.error('Gagal mengambil trailer:', err);
+                alert('Terjadi kesalahan saat mengambil trailer.');
+            }
+        }
+
+        // Reset trailer saat modal ditutup
+        document.getElementById('trailerModal').addEventListener('hidden.bs.modal', () => {
+            document.getElementById('trailerIframe').src = '';
+        });
+    </script>
+
+    <script>
+        const carousel = document.querySelector('#carouselDcp');
+        const carouselInstance = bootstrap.Carousel.getOrCreateInstance(carousel);
+
+        function pauseCarousel() {
+            carouselInstance.pause();
+        }
+
+        function resumeCarousel() {
+            carouselInstance.cycle(); // lanjutkan autoplay
+        }
     </script>
 
     <style>

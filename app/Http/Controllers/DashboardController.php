@@ -9,6 +9,7 @@ use App\Models\MaintenanceHvac;
 use App\Models\DcpReport;
 use App\Models\Notifikasi;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Cache;
 
 class DashboardController extends Controller
 {
@@ -48,7 +49,6 @@ class DashboardController extends Controller
     // DCP Report
     $dcpReports = DcpReport::where('admin_id', $adminId)
       ->latest()
-      ->take(12)
       ->get();
 
     foreach ($dcpReports as $report) {
@@ -58,11 +58,15 @@ class DashboardController extends Controller
 
       $judul = $report->film_details[0]['judulFilm'] ?? null;
 
-      $report->poster_url = $judul
-        ? $this->getPosterUrlFromTmdb($judul)
-        : asset('images/no-poster.jpg');
-    }
+      // Ambil poster jika belum disimpan
+      if (!$report->poster_url && $judul) {
+        $posterUrl = $this->getPosterUrlFromTmdb($judul);
+        $report->poster_url = $posterUrl;
+        $report->save(); // simpan ke DB agar tidak ambil lagi
+      }
 
+      $report->poster_url = $report->poster_url ?: asset('images/no-poster.jpg');
+    }
 
     // Notifikasi Maintenance HVAC
     $notifService = MaintenanceHvac::where('admin_id', Auth::id())
@@ -84,22 +88,25 @@ class DashboardController extends Controller
   public function getPosterUrlFromTmdb($judul)
   {
     $apiKey = config('services.tmdb.api_key');
+    $cacheKey = 'tmdb_poster_' . md5($judul);
 
-    try {
-      $response = Http::get("https://api.themoviedb.org/3/search/movie", [
-        'api_key' => $apiKey,
-        'query' => $judul,
-      ]);
+    return Cache::remember($cacheKey, now()->addDays(30), function () use ($apiKey, $judul) {
+      try {
+        $response = Http::get("https://api.themoviedb.org/3/search/movie", [
+          'api_key' => $apiKey,
+          'query' => $judul,
+        ]);
 
-      $data = $response->json();
+        $data = $response->json();
 
-      if (!empty($data['results']) && !empty($data['results'][0]['poster_path'])) {
-        return 'https://image.tmdb.org/t/p/w500' . $data['results'][0]['poster_path'];
+        if (!empty($data['results']) && !empty($data['results'][0]['poster_path'])) {
+          return 'https://image.tmdb.org/t/p/w500' . $data['results'][0]['poster_path'];
+        }
+      } catch (\Exception $e) {
+        // log error jika perlu
       }
-    } catch (\Exception $e) {
-      // log error jika perlu
-    }
 
-    return asset('images/no-poster.jpg'); // fallback jika tidak ada hasil
+      return asset('images/no-poster.jpg'); // fallback
+    });
   }
 }
