@@ -143,12 +143,12 @@
         }
 
         .hover-link:hover {
-            color: #c9c9c9 !important;
+            color: #367fa9 !important;
             text-decoration: underline;
         }
 
         .hover-icon:hover {
-            color: #25d366 !important;
+            color: #367fa9 !important;
             transform: scale(1.2);
             transition: 0.3s ease;
         }
@@ -323,7 +323,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white shadow py-3 px-4 mt-auto text-center">
+    <footer class="bg-white shadow text-center">
         &copy; {{ date('Y') }}
         <a href="https://sobadanu.com" target="_blank" class="text-muted text-decoration-none fw-semibold hover-link">
             SobaDanu - Full Stack Developer
