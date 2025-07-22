@@ -86,10 +86,10 @@
         });
 
         // Bagi semua data DCP jadi grup isi 4
-        $chunks = $dcpReports->chunk(4);
+        $chunks = $dcpReports->chunk(5);
     @endphp
 
-    <div class="container-fluid px-4">
+    <div class="container-fluid py-4">
         <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="8000">
             <h4 class="fw-bold text-dark mb-3">
                 <i class="bi bi-collection-play me-1"></i> DCP Reports Update
@@ -312,6 +312,7 @@
     <style>
         .card-modern {
             border-width: 5px !important;
+            border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             background: linear-gradient(to bottom right, #ffffff, #f8f9fa);
