@@ -55,6 +55,9 @@
                                         <th scope="col" class="text-center">Akhir</th>
                                         <th scope="col" class="text-center">Pemakaian</th>
                                         <th scope="col" class="text-center">Satuan</th>
+                                        @if (auth('admin')->user()->role === 'admin')
+                                            <th scope="col" class="text-center">Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,6 +80,23 @@
                                             <td class="text-center">{{ $row->akhir }}</td>
                                             <td class="text-center">{{ $row->pemakaian }}</td>
                                             <td class="text-center">{{ $satuan }}</td>
+                                            @if (auth('admin')->user()->role === 'admin')
+                                                <td class="text-center">
+                                                    <a href="{{ route('meteran.edit', $row->id) }}"
+                                                        class="btn btn-sm btn-warning me-1">
+                                                        <i class="bi bi-pencil-square"></i>
+                                                    </a>
+                                                    <form action="{{ route('meteran.destroy', $row->id) }}" method="POST"
+                                                        class="d-inline"
+                                                        onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-sm btn-danger">
+                                                            <i class="bi bi-trash-fill"></i>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>

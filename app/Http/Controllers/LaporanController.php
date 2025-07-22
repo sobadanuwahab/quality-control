@@ -10,74 +10,91 @@ use App\Models\Admin;
 
 class LaporanController extends Controller
 {
-    public function index(Request $request)
-    {
-        $adminId = Auth::id();
-        $tanggal_awal = $request->tanggal_awal;
-        $tanggal_akhir = $request->tanggal_akhir;
+  public function index(Request $request)
+  {
+    $user = Auth::user();
+    $isAdmin = $user->role === 'admin';
+    $adminId = $user->id;
 
-        $raw_data = [];
-        $total_kumulatif = [];
+    $tanggal_awal = $request->tanggal_awal;
+    $tanggal_akhir = $request->tanggal_akhir;
 
-        if ($tanggal_awal && $tanggal_akhir) {
-            $raw_data = LogMeteran::where('admin_id', $adminId)
-                ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
-                ->orderBy('nama_meteran')
-                ->orderBy('tanggal')
-                ->get()
-                ->groupBy('nama_meteran'); // ⬅️ hasilnya akan dikelompokkan per jenis meteran
+    $query = LogMeteran::query();
 
+    if ($tanggal_awal && $tanggal_akhir) {
+      $query->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir]);
 
-            $total_kumulatif = LogMeteran::where('admin_id', $adminId)
-                ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
-                ->selectRaw('nama_meteran, SUM(pemakaian) as total')
-                ->groupBy('nama_meteran')
-                ->pluck('total', 'nama_meteran');
-        }
+      // ❗ Hanya filter admin_id jika BUKAN ADMIN
+      if (!$isAdmin) {
+        $query->where('admin_id', $adminId);
+      }
 
-        return view('laporan.index', [
-            'raw_data' => $raw_data,
-            'total_kumulatif' => $total_kumulatif,
-            'tanggal_awal' => $tanggal_awal,
-            'tanggal_akhir' => $tanggal_akhir,
-        ]);
+      $raw_data = $query->orderBy('nama_meteran')->orderBy('tanggal')->get()->groupBy('nama_meteran');
+
+      // Salin ulang query untuk total
+      $total_query = LogMeteran::query()
+        ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir]);
+
+      if (!$isAdmin) {
+        $total_query->where('admin_id', $adminId);
+      }
+
+      $total_kumulatif = $total_query
+        ->selectRaw('nama_meteran, SUM(pemakaian) as total')
+        ->groupBy('nama_meteran')
+        ->pluck('total', 'nama_meteran');
+    } else {
+      $raw_data = [];
+      $total_kumulatif = [];
     }
 
-    public function exportPdf(Request $request)
-    {
-        $adminId = Auth::id();
-        $admin = Admin::find($adminId);
-        $namaBioskop = $admin->nama_bioskop ?? 'Bioskop';
+    return view('laporan.index', compact('raw_data', 'total_kumulatif', 'tanggal_awal', 'tanggal_akhir'));
+  }
 
-        $tanggal_awal = $request->tanggal_awal;
-        $tanggal_akhir = $request->tanggal_akhir;
+  public function exportPdf(Request $request)
+  {
+    $user = Auth::user();
+    $isAdmin = $user->role === 'admin';
+    $adminId = $user->id;
 
-        $data_log = collect();
-        $total_kumulatif = collect();
+    $admin = Admin::find($adminId);
+    $namaBioskop = $admin->nama_bioskop ?? 'Bioskop';
 
-        if ($tanggal_awal && $tanggal_akhir) {
-            $data_log = LogMeteran::where('admin_id', $adminId)
-                ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
-                ->orderBy('nama_meteran')
-                ->orderBy('tanggal')
-                ->get()
-                ->groupBy('nama_meteran');
+    $tanggal_awal = $request->tanggal_awal;
+    $tanggal_akhir = $request->tanggal_akhir;
 
-            $total_kumulatif = LogMeteran::where('admin_id', $adminId)
-                ->whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir])
-                ->selectRaw('nama_meteran, SUM(pemakaian) as total')
-                ->groupBy('nama_meteran')
-                ->pluck('total', 'nama_meteran');
-        }
+    $data_log = collect();
+    $total_kumulatif = collect();
 
-        $pdf = PDF::loadView('laporan.pdf', [
-            'raw_data' => $data_log,
-            'total_kumulatif' => $total_kumulatif,
-            'nama_bioskop' => $namaBioskop,
-            'tanggal_awal' => $tanggal_awal,
-            'tanggal_akhir' => $tanggal_akhir,
-        ])->setPaper('A4', 'portrait');
+    if ($tanggal_awal && $tanggal_akhir) {
+      $query = LogMeteran::whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir]);
 
-        return $pdf->stream('laporan-meteran.pdf');
+      if (!$isAdmin) {
+        $query->where('admin_id', $adminId);
+      }
+
+      $data_log = $query->orderBy('nama_meteran')->orderBy('tanggal')->get()->groupBy('nama_meteran');
+
+      $total_query = LogMeteran::whereBetween('tanggal', [$tanggal_awal, $tanggal_akhir]);
+
+      if (!$isAdmin) {
+        $total_query->where('admin_id', $adminId);
+      }
+
+      $total_kumulatif = $total_query
+        ->selectRaw('nama_meteran, SUM(pemakaian) as total')
+        ->groupBy('nama_meteran')
+        ->pluck('total', 'nama_meteran');
     }
+
+    $pdf = PDF::loadView('laporan.pdf', [
+      'raw_data' => $data_log,
+      'total_kumulatif' => $total_kumulatif,
+      'nama_bioskop' => $namaBioskop,
+      'tanggal_awal' => $tanggal_awal,
+      'tanggal_akhir' => $tanggal_akhir,
+    ])->setPaper('A4', 'portrait');
+
+    return $pdf->stream('laporan-meteran.pdf');
+  }
 }

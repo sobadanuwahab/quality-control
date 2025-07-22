@@ -34,6 +34,11 @@ Route::middleware('auth')->group(function () {
   Route::post('/meteran/input', [LogMeteranController::class, 'store'])->name('meteran.store');
 });
 
+Route::get('/meteran/{id}/edit', [MeteranController::class, 'edit'])->name('meteran.edit');
+Route::delete('/meteran/{id}', [LogMeteranController::class, 'destroy'])->name('meteran.destroy');
+Route::put('/log-meteran/{id}', [LogMeteranController::class, 'update'])->name('log_meteran.update');
+
+
 // Laporan
 Route::get('/laporan', [LaporanController::class, 'index'])
   ->middleware('auth')->name('laporan.index');
