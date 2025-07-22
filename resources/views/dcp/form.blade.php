@@ -4,7 +4,7 @@
     <main class="flex-grow p-4">
         <div class="container mx-auto">
 
-            <h2 class="mb-4 fw-bold text-primary">
+            <h2 class="mb-4 fw-bold" style="color: #367fa9">
                 <i class="bi bi-pencil-square me-2"></i> Form Penerimaan DCP
             </h2>
 

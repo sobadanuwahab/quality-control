@@ -91,7 +91,7 @@
 
     <div class="container-fluid py-4">
         <div id="carouselDcp" class="carousel slide mb-5" data-bs-ride="carousel" data-bs-interval="8000">
-            <h4 class="fw-bold text-dark mb-3">
+            <h4 class="fw-bold mb-3" style="color: #367fa9">
                 <i class="bi bi-collection-play me-1"></i> DCP Reports Update
             </h4>
 
@@ -166,7 +166,7 @@
 
     {{-- Carousel Meteran --}}
     <div class="container-fluid px-4">
-        <h4 class="fw-bold text-dark mb-3">
+        <h4 class="fw-bold mb-3" style="color: #367fa9">
             <i class="bi bi-speedometer2 me-1"></i> Meteran Reports Update
         </h4>
 

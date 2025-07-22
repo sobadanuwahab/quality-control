@@ -5,7 +5,9 @@
         <div class="container mx-auto">
 
             {{-- Title Section --}}
-            <h2 class="fw-bold text-primary mb-4"><i class="bi bi-tools me-2"></i>Laporan Maintenance Projector & Sound System
+            <h2 class="fw-bold mb-4" style="color: #367fa9"><i class="bi bi-clipboard-data me-2"></i>Laporan Maintenance
+                Projector &
+                Sound System
             </h2>
 
             {{-- Form Filter --}}

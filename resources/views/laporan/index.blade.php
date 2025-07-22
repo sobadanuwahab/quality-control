@@ -3,7 +3,7 @@
 @section('content')
     <main class="flex-grow p-4">
         <div class="container mx-auto">
-            <h2 class="mt-4 mb-4 text-primary fw-bold">
+            <h2 class="mt-4 mb-4 fw-bold" style="color: #367fa9">
                 <i class="bi bi-file-earmark-bar-graph me-2"></i> Laporan Data Meteran
             </h2>
 

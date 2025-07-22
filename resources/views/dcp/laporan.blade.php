@@ -4,8 +4,8 @@
     <main class="flex-grow p-4">
         <div class="container mx-auto">
 
-            <h2 class="mb-4 fw-bold text-primary">
-                <i class="bi bi-clipboard2-data me-2"></i> Laporan Penerimaan DCP
+            <h2 class="mb-4 fw-bold" style="color: #367fa9">
+                <i class="bi bi-clipboard-data me-2"></i> Laporan Penerimaan DCP
             </h2>
 
             <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">

@@ -21,14 +21,16 @@
 
         .sidebar {
             height: 100vh;
-            background-color: #006dcd;
+            background-color: #333333;
             padding-top: 1rem;
             width: 250px;
             position: fixed;
             top: 60px;
             left: 0;
             overflow-y: auto;
-            transition: all 0.3s ease;
+            transform: translateX(0);
+            transition: transform 0.3s ease;
+            z-index: 1040;
         }
 
         .sidebar.hidden {
@@ -61,15 +63,20 @@
         }
 
         #toggleSidebar:hover {
-            background-color: #f6f6f6;
+            background-color: #367fa9;
             /* kuning Bootstrap */
             transition: background-color 0.3s ease;
+            border-radius: 0;
+        }
+
+        #toggleSidebar:hover #toggleIcon {
+            color: #fff;
         }
 
         .topbar {
             height: 60px;
-            background-color: #ffffff;
-            padding: 0 1rem;
+            background-color: #3c8dbc;
+            padding-left: 0 !important;
             display: flex;
             align-items: center;
             position: fixed;
@@ -81,13 +88,25 @@
         }
 
         .topbar .logo {
-            display: flex;
-            align-items: center;
+            width: 250px;
+            /* Sesuaikan dengan sidebar */
+            height: 100%;
+            background-color: #367fa9;
+            /* Warna sidebar */
+            margin: 0;
+            padding: 0;
         }
 
         .topbar .logo img {
-            height: 28px;
-            margin-right: 10px;
+            height: 38px;
+        }
+
+        .topbar .logo a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 0;
         }
 
         .main-content {
@@ -111,8 +130,8 @@
         }
 
         /* Tambahkan ini ke CSS kamu */
-        .sidebar.hidden-desktop {
-            display: none !important;
+        .sidebar.slide-hidden {
+            transform: translateX(-100%);
         }
 
         .main-content.full-width {
@@ -180,19 +199,18 @@
 </head>
 
 <body>
-
     <!-- Header / Navbar -->
-    <div class="topbar">
+    <div class="topbar shadow-sm">
         <!-- Logo -->
         <div class="logo">
-            <a href="/" class="d-flex align-items-center text-decoration-none">
-                <img src="{{ asset('assets/images/cinemaxxi.png') }}" alt="Logo XXI">
+            <a href="/" class="text-decoration-none">
+                <img src="{{ asset('assets/images/cinemaxxi.png') }}" alt="Logo XXI" style="height: 32px;">
             </a>
         </div>
 
         <!-- Toggle Sidebar -->
-        <button class="btn me-2" id="toggleSidebar">
-            <i class="bi bi-list fs-3 text-dark"></i>
+        <button class="btn h-100 px-3 border-0 rounded-0" id="toggleSidebar">
+            <i class="bi bi-list fs-3 text-white" id="toggleIcon"></i>
         </button>
 
         @php
@@ -200,9 +218,9 @@
             $user = Auth::guard('admin')->user();
         @endphp
 
-        <!-- Nama Bioskop di kanan -->
-        <div class="ms-auto fw-bold"
-            style="font-size: 1.1rem; color: #000000; letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif;">
+        <!-- Nama Bioskop -->
+        <div class="ms-auto me-4 fw-bold"
+            style="font-size: 1.1rem; color: #ffffff; letter-spacing: 1px; font-family: 'Roboto Slab', sans-serif;">
             {{ $user->nama_bioskop ?? 'Dashboard' }}
         </div>
     </div>
@@ -340,16 +358,10 @@
                 sidebar.classList.toggle('show');
                 overlay.classList.toggle('hidden');
             } else {
-                // Sembunyikan sidebar total (bukan cuma collapse)
-                sidebar.classList.toggle('hidden-desktop');
+                sidebar.classList.toggle('slide-hidden'); // pakai transform
                 mainContent.classList.toggle('full-width');
                 footer.classList.toggle('full-width');
             }
-        });
-
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('show');
-            overlay.classList.add('hidden');
         });
     </script>
 

@@ -5,7 +5,7 @@
         <div class="container mx-auto">
 
             {{-- Title Section --}}
-            <h2 class="mb-4 fw-bold text-primary"><i class="bi bi-tools me-2"></i>Form Maintenance HVAC</h2>
+            <h2 class="mb-4 fw-bold" style="color: #367fa9"><i class="bi bi-pencil-square me-2"></i>Form Maintenance HVAC</h2>
 
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" id="success-alert" role="alert">
