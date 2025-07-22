@@ -202,7 +202,7 @@
 
             @foreach ($total_kumulatif as $nama_meteran => $data)
                 <div class="col-md-4">
-                    <div class="card card-modern border border-4 {{ $warna($nama_meteran) }}">
+                    <div class="card card-modern border {{ $warna($nama_meteran) }}">
                         <div class="card-body d-flex align-items-center">
                             <div class="me-3">
                                 <i class="bi {{ $ikon($nama_meteran) }} display-4"
@@ -311,7 +311,7 @@
 
     <style>
         .card-modern {
-            border-radius: 20px;
+            border-width: 5px !important;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             background: linear-gradient(to bottom right, #ffffff, #f8f9fa);

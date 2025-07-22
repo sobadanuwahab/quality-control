@@ -8,20 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LogMeteranController extends Controller
 {
-  public function lastAkhir(Request $request)
-  {
-    $namaMeteran = $request->query('nama_meteran');
-
-    $data = \App\Models\LogMeteran::where('nama_meteran', $namaMeteran)
-      ->where('admin_id', Auth::id())
-      ->orderByDesc('tanggal')
-      ->first();
-
-    return response()->json([
-      'akhir' => $data ? $data->akhir : null
-    ]);
-  }
-
   public function create()
   {
     return view('meteran.input');

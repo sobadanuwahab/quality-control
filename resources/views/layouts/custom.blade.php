@@ -65,7 +65,7 @@
         }
 
         .hover-link:hover {
-            color: #0dcaf0 !important;
+            color: #00d1b2 !important;
             /* Bootstrap info color */
             text-decoration: underline;
         }
@@ -239,7 +239,7 @@
         &copy; {{ date('Y') }}
         <a href="https://sobadanu.com" target="_blank"
             class="text-white text-decoration-none fw-semibold hover-link">
-            SobaDanu_Full Stack Developer
+            SobaDanu - Full Stack Developer
         </a>
         &nbsp;|&nbsp;
         <a href="https://github.com/sobadanuwahab" target="_blank" class="text-white mx-1 hover-icon">

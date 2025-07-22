@@ -38,7 +38,7 @@
                 {{-- Meteran Awal --}}
                 <div class="col-12">
                     <label for="awal" class="form-label fw-semibold">
-                        <i class="bi bi-box-arrow-in-left me-1"></i> Meteran Awal
+                        <i class="bi bi-box-arrow-in-left me-1"></i> Stand Awal
                     </label>
                     <div class="input-group">
                         <input type="number" step="0.01" class="form-control" name="awal" id="awal" required>
@@ -49,7 +49,7 @@
                 {{-- Meteran Akhir --}}
                 <div class="col-12">
                     <label for="akhir" class="form-label fw-semibold">
-                        <i class="bi bi-box-arrow-in-right me-1"></i> Meteran Akhir
+                        <i class="bi bi-box-arrow-in-right me-1"></i> Stand Akhir
                     </label>
                     <div class="input-group">
                         <input type="number" step="0.01" class="form-control" name="akhir" id="akhir" required>
@@ -73,7 +73,6 @@
             document.addEventListener("DOMContentLoaded", function() {
                 const selectMeteran = document.querySelector('select[name="nama_meteran"]');
                 const awalInput = document.querySelector('input[name="awal"]');
-                const lastAkhirUrl = "{{ route('meteran.last-akhir') }}"; // <- Blade dievaluasi dulu
 
                 selectMeteran.addEventListener('change', async function() {
                     const selected = this.value;
@@ -81,8 +80,7 @@
 
                     try {
                         const res = await fetch(
-                            `${lastAkhirUrl}?nama_meteran=${encodeURIComponent(selected)}`
-                        );
+                            `/meteran/last-akhir?nama_meteran=${encodeURIComponent(selected)}`);
                         const data = await res.json();
                         if (data.akhir !== undefined) {
                             awalInput.value = data.akhir;
@@ -91,6 +89,38 @@
                         console.error("Gagal mengambil data terakhir:", err);
                     }
                 });
+            });
+        </script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const selectMeteran = document.querySelector('select[name="nama_meteran"]');
+                const awalInput = document.querySelector('input[name="awal"]');
+
+                selectMeteran.addEventListener('change', async function() {
+                    const selected = this.value;
+                    if (!selected) return;
+
+                    try {
+                        const res = await fetch(
+                            `/meteran/last-akhir?nama_meteran=${encodeURIComponent(selected)}`);
+                        const data = await res.json();
+                        if (data.akhir !== undefined) {
+                            awalInput.value = data.akhir;
+                        }
+                    } catch (err) {
+                        console.error("Gagal mengambil data terakhir:", err);
+                    }
+                });
+
+                // Auto-hide success alert after 5 seconds
+                const successAlert = document.querySelector('.alert-success');
+                if (successAlert) {
+                    setTimeout(() => {
+                        successAlert.classList.add('fade');
+                        successAlert.addEventListener('transitionend', () => successAlert.remove());
+                    }, 5000);
+                }
             });
         </script>
     @endpush
