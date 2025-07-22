@@ -99,10 +99,11 @@
         footer {
             text-align: center;
             padding: 1rem;
-            background-color: #006dcd;
-            color: #fff;
+            background-color: #ffffff;
+            color: #000000;
             margin-left: 250px;
             transition: margin-left 0.3s ease;
+            box-shadow: 4px 2px 0px rgba(0, 0, 0, 0.1);
         }
 
         footer.collapsed {
@@ -304,19 +305,19 @@
     </main>
 
     <!-- Footer -->
-    <footer>
+    <footer class="bg-white shadow py-3 px-4 mt-auto text-center">
         &copy; {{ date('Y') }}
-        <a href="https://sobadanu.com" target="_blank" class="text-white text-decoration-none fw-semibold hover-link">
+        <a href="https://sobadanu.com" target="_blank" class="text-muted text-decoration-none fw-semibold hover-link">
             SobaDanu - Full Stack Developer
         </a>
         &nbsp;|&nbsp;
-        <a href="https://github.com/sobadanuwahab" target="_blank" class="text-white mx-1 hover-icon">
-            <i class="bi bi-github"></i>
+        <a href="https://github.com/sobadanuwahab" target="_blank" class="text-dark mx-1 hover-icon">
+            <i class="bi bi-github fs-5"></i>
         </a>
-        <a href="https://wa.me/6281314333352" target="_blank" class="text-white mx-1 hover-icon">
-            <i class="bi bi-whatsapp"></i>
+        <a href="https://wa.me/6281314333352" target="_blank" class="text-dark mx-1 hover-icon">
+            <i class="bi bi-whatsapp fs-5"></i>
         </a>
-        <span class="d-block mt-1 small">All rights reserved.</span>
+        <span class="d-block mt-1 small text-muted">All rights reserved.</span>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
