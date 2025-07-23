@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($logMeteran as $row)
+                    @forelse ($logMeteran as $row)
                         @php
                             $satuan =
                                 str_contains($row->nama_meteran, 'Air') || str_contains($row->nama_meteran, 'Gas')
@@ -66,7 +66,14 @@
                                 </td>
                             @endif
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="{{ auth('admin')->user()->role === 'admin' ? 6 : 5 }}"
+                                class="text-center text-danger">
+                                Belum ada data log meteran
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
 
