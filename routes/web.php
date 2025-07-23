@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\{
   ProfileController,
   DashboardController,
@@ -11,8 +12,9 @@ use App\Http\Controllers\{
   UserController,
   DcpController,
   OnesheetController,
-  MaintenanceController
+  MaintenanceController,
 };
+use App\Http\Controllers\AdminViewController;
 
 // Arahkan root ke halaman login
 Route::get('/', fn() => redirect('/login'));
@@ -110,5 +112,11 @@ Route::get('/maintenance/projector/laporan/pdf', [MaintenanceController::class, 
   ->name('maintenance.projector.pdf');
 Route::get('/maintenance/hvac/laporan/pdf', [MaintenanceController::class, 'exportHvacPdf'])
   ->name('maintenance.hvac.pdf');
+
+Route::middleware(['auth'])->group(function () {
+  Route::get('/admin/data-user', [AdminViewController::class, 'index'])->name('admin.userdata');
+});
+
+
 
 require __DIR__ . '/auth.php';

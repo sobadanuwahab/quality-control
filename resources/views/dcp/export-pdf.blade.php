@@ -18,13 +18,13 @@
 
         th,
         td {
-            border: 1px solid #333;
+            border: 1px solid #000000;
             padding: 6px;
             text-align: left;
         }
 
         th {
-            background-color: #eee;
+            background-color: #367fa9;
         }
 
         h2 {
@@ -41,19 +41,21 @@
     <table>
         <thead>
             <tr>
-                <th style="text-align: center">No</th>
-                <th style="text-align: center">Judul Film</th>
-                <th style="text-align: center">Aspect Ratio</th>
-                <th style="text-align: center">Format Sound</th>
-                <th style="text-align: center">Status KDM</th>
-                <th style="text-align: center">Lokasi Penyimpanan</th>
-                <th style="text-align: center">Keterangan</th>
+                <th style="text-align: center; color: white;">No</th>
+                <th style="text-align: center; color: white;">Judul Film</th>
+                <th style="text-align: center; color: white;">Aspect Ratio</th>
+                <th style="text-align: center; color: white;">Format Sound</th>
+                <th style="text-align: center; color: white;">Status KDM</th>
+                <th style="text-align: center; color: white;">Lokasi Penyimpanan</th>
+                <th style="text-align: center; color: white;">Keterangan</th>
             </tr>
         </thead>
         <tbody>
             @php $no = 1; @endphp
             @foreach ($dcpList as $dcp)
-                @php $films = json_decode($dcp->film_details, true); @endphp
+                @php
+                    $films = is_string($dcp->film_details) ? json_decode($dcp->film_details, true) : $dcp->film_details;
+                @endphp
                 @foreach ($films as $film)
                     @php
                         $keterangan = strtolower($film['keterangan'] ?? '');

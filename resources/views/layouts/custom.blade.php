@@ -228,84 +228,98 @@
     <!-- Sidebar -->
     <div class="sidebar show">
         <ul class="nav flex-column px-3">
+            @if ($user && $user->role !== 'admin')
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                        <i class="bi bi-house"></i> Dashboard
+                    </a>
+                </li>
 
-            <li class="nav-item">
-                <a href="{{ route('dashboard') }}"
-                    class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    <i class="bi bi-house"></i> Dashboard
-                </a>
-            </li>
+                <!-- Dropdown: Meteran -->
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle {{ request()->is('meteran*') || request()->is('laporan*') ? '' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#meteranSub" role="button"
+                        aria-expanded="{{ request()->is('meteran*') || request()->is('laporan*') ? 'true' : 'false' }}"
+                        aria-controls="meteranSub">
+                        <i class="bi bi-lightning-charge-fill"></i> Data Meteran
+                    </a>
+                    <div class="collapse {{ request()->is('meteran*') || request()->is('laporan*') ? 'show' : '' }}"
+                        id="meteranSub">
+                        <a href="{{ route('meteran.input') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('meteran.input') ? 'active' : '' }}">Form
+                            Meteran</a>
+                        <a href="{{ route('laporan.index') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('laporan.index') ? 'active' : '' }}">Laporan
+                            Meteran</a>
+                    </div>
+                </li>
 
-            <!-- Dropdown: Meteran -->
-            <li class="nav-item">
-                <a class="nav-link dropdown-toggle {{ request()->is('meteran*') || request()->is('laporan*') ? '' : 'collapsed' }}"
-                    data-bs-toggle="collapse" href="#meteranSub" role="button"
-                    aria-expanded="{{ request()->is('meteran*') || request()->is('laporan*') ? 'true' : 'false' }}"
-                    aria-controls="meteranSub">
-                    <i class="bi bi-lightning-charge-fill"></i> Data Meteran
-                </a>
-                <div class="collapse {{ request()->is('meteran*') || request()->is('laporan*') ? 'show' : '' }}"
-                    id="meteranSub">
-                    <a href="{{ route('meteran.input') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('meteran.input') ? 'active' : '' }}">Form Meteran</a>
-                    <a href="{{ route('laporan.index') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('laporan.index') ? 'active' : '' }}">Laporan
-                        Meteran</a>
-                </div>
-            </li>
+                <!-- Dropdown: DCP & Poster -->
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle {{ request()->is('dcp*') || request()->is('onesheet*') ? '' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#dcpSub" role="button"
+                        aria-expanded="{{ request()->is('dcp*') || request()->is('onesheet*') ? 'true' : 'false' }}"
+                        aria-controls="dcpSub">
+                        <i class="bi bi-film"></i> DCP & Onesheet
+                    </a>
+                    <div class="collapse {{ request()->is('dcp*') || request()->is('onesheet*') ? 'show' : '' }}"
+                        id="dcpSub">
+                        <a href="{{ route('dcp.form') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('dcp.form') ? 'active' : '' }}">Form DCP</a>
+                        <a href="{{ route('onesheet.form') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('onesheet.form') ? 'active' : '' }}">Form
+                            Poster</a>
+                        <a href="{{ route('dcp.laporan') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('dcp.laporan') ? 'active' : '' }}">Laporan
+                            DCP</a>
+                        <a href="{{ route('onesheet.laporan') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('onesheet.laporan') ? 'active' : '' }}">Laporan
+                            Poster</a>
+                    </div>
+                </li>
 
-            <!-- Dropdown: DCP & Poster -->
-            <li class="nav-item">
-                <a class="nav-link dropdown-toggle {{ request()->is('dcp*') || request()->is('onesheet*') ? '' : 'collapsed' }}"
-                    data-bs-toggle="collapse" href="#dcpSub" role="button"
-                    aria-expanded="{{ request()->is('dcp*') || request()->is('onesheet*') ? 'true' : 'false' }}"
-                    aria-controls="dcpSub">
-                    <i class="bi bi-film"></i> DCP & Onesheet
-                </a>
-                <div class="collapse {{ request()->is('dcp*') || request()->is('onesheet*') ? 'show' : '' }}"
-                    id="dcpSub">
-                    <a href="{{ route('dcp.form') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('dcp.form') ? 'active' : '' }}">Form DCP</a>
-                    <a href="{{ route('onesheet.form') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('onesheet.form') ? 'active' : '' }}">Form Poster</a>
-                    <a href="{{ route('dcp.laporan') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('dcp.laporan') ? 'active' : '' }}">Laporan DCP</a>
-                    <a href="{{ route('onesheet.laporan') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('onesheet.laporan') ? 'active' : '' }}">Laporan
-                        Poster</a>
-                </div>
-            </li>
+                <!-- Dropdown: Maintenance -->
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle {{ request()->is('maintenance*') ? '' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#maintSub" role="button"
+                        aria-expanded="{{ request()->is('maintenance*') ? 'true' : 'false' }}"
+                        aria-controls="maintSub">
+                        <i class="bi bi-tools"></i> Troubleshooting
+                    </a>
+                    <div class="collapse {{ request()->is('maintenance*') ? 'show' : '' }}" id="maintSub">
+                        <a href="{{ route('maintenance.projector.form') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('maintenance.projector.form') ? 'active' : '' }}">Form
+                            Projector</a>
+                        <a href="{{ route('maintenance.hvac.form') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('maintenance.hvac.form') ? 'active' : '' }}">Form
+                            HVAC</a>
+                        <a href="{{ route('maintenance.projector.laporan') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('maintenance.projector.laporan') ? 'active' : '' }}">Laporan
+                            Projector</a>
+                        <a href="{{ route('maintenance.hvac.laporan') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('maintenance.hvac.laporan') ? 'active' : '' }}">Laporan
+                            HVAC</a>
+                    </div>
+                </li>
 
-            <!-- Dropdown: Maintenance -->
-            <li class="nav-item">
-                <a class="nav-link dropdown-toggle {{ request()->is('maintenance*') ? '' : 'collapsed' }}"
-                    data-bs-toggle="collapse" href="#maintSub" role="button"
-                    aria-expanded="{{ request()->is('maintenance*') ? 'true' : 'false' }}" aria-controls="maintSub">
-                    <i class="bi bi-tools"></i> Troubleshooting
-                </a>
-                <div class="collapse {{ request()->is('maintenance*') ? 'show' : '' }}" id="maintSub">
-                    <a href="{{ route('maintenance.projector.form') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('maintenance.projector.form') ? 'active' : '' }}">Form
-                        Projector</a>
-                    <a href="{{ route('maintenance.hvac.form') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('maintenance.hvac.form') ? 'active' : '' }}">Form
-                        HVAC</a>
-                    <a href="{{ route('maintenance.projector.laporan') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('maintenance.projector.laporan') ? 'active' : '' }}">Laporan
-                        Projector</a>
-                    <a href="{{ route('maintenance.hvac.laporan') }}"
-                        class="nav-link ps-4 {{ request()->routeIs('maintenance.hvac.laporan') ? 'active' : '' }}">Laporan
-                        HVAC</a>
-                </div>
-            </li>
+                <!-- Profil -->
+                <li class="nav-item">
+                    <a href="{{ route('password.admin.change') }}"
+                        class="nav-link {{ request()->routeIs('password.admin.change') ? 'active' : '' }}">
+                        <i class="bi bi-person-lines-fill"></i> Profil
+                    </a>
+                </li>
+            @endif
 
-            <!-- Profil -->
-            <li class="nav-item">
-                <a href="{{ route('password.admin.change') }}"
-                    class="nav-link {{ request()->routeIs('password.admin.change') ? 'active' : '' }}">
-                    <i class="bi bi-person-lines-fill"></i> Profil
-                </a>
-            </li>
+            @if ($user && $user->role === 'admin')
+                <li class="nav-item">
+                    <a href="{{ route('admin.userdata') }}"
+                        class="nav-link {{ request()->routeIs('admin.userdata') ? 'active' : '' }}">
+                        <i class="bi bi-people-fill"></i> Data User
+                    </a>
+                </li>
+            @endif
 
             <!-- Logout -->
             <li class="nav-item mt-3">
