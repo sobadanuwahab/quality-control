@@ -69,7 +69,7 @@
                             <div class="col-md-2 mb-3">
                                 <label class="form-label">Status KDM</label>
                                 <select name="film_details[{{ $index }}][statusKdm]" class="form-select" required>
-                                    @foreach (['READY', 'NOT READY', 'EXPIRED'] as $status)
+                                    @foreach (['Ready', 'Not Ready', 'Expired'] as $status)
                                         <option value="{{ $status }}"
                                             {{ ($film['statusKdm'] ?? '') == $status ? 'selected' : '' }}>
                                             {{ $status }}
@@ -86,7 +86,7 @@
                         <div class="mt-2">
                             <label class="form-label">Keterangan</label>
                             <select name="film_details[{{ $index }}][keterangan]" class="form-select" required>
-                                @foreach (['BELUM TAYANG', 'SEDANG TAYANG', 'SUDAH TAYANG'] as $status)
+                                @foreach (['Belum Tayang', 'Sedang Tayang', 'Sudah Tayang'] as $status)
                                     <option value="{{ $status }}"
                                         {{ ($film['keterangan'] ?? '') == $status ? 'selected' : '' }}>
                                         {{ $status }}
