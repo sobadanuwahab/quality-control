@@ -64,9 +64,9 @@
                                 <label class="form-label">Status KDM</label>
                                 <select name="film_details[0][statusKdm]" class="form-select" required>
                                     <option value="" disabled selected>Pilih status</option>
-                                    <option value="READY">READY</option>
-                                    <option value="NOT READY">NOT READY</option>
-                                    <option value="EXPIRED">EXPIRED</option>
+                                    <option value="Ready">Ready</option>
+                                    <option value="Not Ready">Not Ready</option>
+                                    <option value="Expired">Expired</option>
                                 </select>
                             </div>
                             <div class="col-md-2">
@@ -78,9 +78,9 @@
                             <label class="form-label">Keterangan</label>
                             <select name="film_details[0][keterangan]" class="form-select" required>
                                 <option value="" disabled selected>Pilih keterangan</option>
-                                <option value="BELUM TAYANG">BELUM TAYANG</option>
-                                <option value="SEDANG TAYANG">SEDANG TAYANG</option>
-                                <option value="SUDAH TAYANG">SUDAH TAYANG</option>
+                                <option value="Belum Tayang">Belum Tayang</option>
+                                <option value="Sedang Tayang">Sedang Tayang</option>
+                                <option value="Sudah Tayang">Sudah Tayang</option>
                             </select>
                         </div>
                     </div>
@@ -128,9 +128,9 @@
                             <label class="form-label">Status KDM</label>
                             <select name="film_details[${index}][statusKdm]" class="form-select" required>
                                 <option value="" disabled selected>Pilih status</option>
-                                <option value="READY">READY</option>
-                                <option value="NOT READY">NOT READY</option>
-                                <option value="EXPIRED">EXPIRED</option>
+                                <option value="Ready">Ready</option>
+                                <option value="Not Ready">Not Ready</option>
+                                <option value="Expired">Expired</option>
                             </select>
                         </div>
                         <div class="col-md-2">
@@ -142,9 +142,9 @@
                         <label class="form-label">Keterangan</label>
                         <select name="film_details[${index}][keterangan]" class="form-select" required>
                             <option value="" disabled selected>Pilih keterangan</option>
-                            <option value="BELUM TAYANG">BELUM TAYANG</option>
-                            <option value="SEDANG TAYANG">SEDANG TAYANG</option>
-                            <option value="SUDAH TAYANG">SUDAH TAYANG</option>
+                            <option value="Belum Tayang">Belum Tayang</option>
+                            <option value="Sedang Tayang">Sedang Tayang</option>
+                            <option value="Sudah Tayang">Sudah Tayang</option>
                         </select>
                     </div>
                 </div>

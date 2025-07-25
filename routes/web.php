@@ -114,9 +114,7 @@ Route::get('/maintenance/hvac/laporan/pdf', [MaintenanceController::class, 'expo
   ->name('maintenance.hvac.pdf');
 
 Route::middleware(['auth'])->group(function () {
-  Route::get('/admin/data-user', [AdminViewController::class, 'index'])->name('admin.userdata');
+  Route::get('/admin/data-user', [AdminViewController::class, 'userData'])->name('admin.userdata');
 });
-
-
 
 require __DIR__ . '/auth.php';

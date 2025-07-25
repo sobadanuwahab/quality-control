@@ -2,15 +2,16 @@
 
 @section('content')
     <div class="container">
-        <h1 class="mb-4">Halaman Admin - Lihat Data User</h1>
+        <h1 class="mb-4"><strong>Dashboard Hari Ini</strong> - {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
+        </h1>
 
         <form method="GET" action="{{ route('admin.userdata') }}" class="mb-4">
-            <label for="admin_id" class="form-label">Pilih User:</label>
+            <label for="admin_id" class="form-label">Pilih Outlet:</label>
             <select name="admin_id" id="admin_id" class="form-select" onchange="this.form.submit()">
-                <option value="">-- Pilih User --</option>
+                <option value="" disabled selected>-- Pilih Outlet --</option>
                 @foreach ($users as $user)
                     <option value="{{ $user->id }}" {{ request('admin_id') == $user->id ? 'selected' : '' }}>
-                        {{ $user->username ?? $user->name }}
+                        {{ $user->nama_bioskop }}
                     </option>
                 @endforeach
             </select>

@@ -316,7 +316,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.userdata') }}"
                         class="nav-link {{ request()->routeIs('admin.userdata') ? 'active' : '' }}">
-                        <i class="bi bi-people-fill"></i> Data User
+                        <i class="bi bi-people-fill"></i> Data Outlet
                     </a>
                 </li>
             @endif
