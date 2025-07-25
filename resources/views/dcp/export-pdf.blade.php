@@ -34,7 +34,7 @@
 </head>
 
 <body>
-    <h2>LAPORAN DATA FILE FILM DI SERVER</h2>
+    <h2>LAPORAN DATA FILE FILM</h2>
     <p><strong>Bioskop:</strong> {{ $namaBioskop }}</p>
     <p><strong>Tanggal:</strong> {{ $tanggal }}</p>
 
