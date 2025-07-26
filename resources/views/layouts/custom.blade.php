@@ -303,6 +303,25 @@
                     </div>
                 </li>
 
+                <!-- Dropdown: Asset Inventory -->
+                <li class="nav-item">
+                    <a class="nav-link dropdown-toggle {{ request()->is('asset*') ? '' : 'collapsed' }}"
+                        data-bs-toggle="collapse" href="#assetSub" role="button"
+                        aria-expanded="{{ request()->is('asset*') ? 'true' : 'false' }}" aria-controls="assetSub">
+                        <i class="bi bi-box-seam"></i> Asset Inventory
+                    </a>
+                    <div class="collapse {{ request()->is('asset*') ? 'show' : '' }}" id="assetSub">
+                        <a href="{{ route('asset.create') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('asset.create') ? 'active' : '' }}">
+                            Tambah Asset
+                        </a>
+                        <a href="{{ route('asset.index') }}"
+                            class="nav-link ps-4 {{ request()->routeIs('asset.index') ? 'active' : '' }}">
+                            Data Asset
+                        </a>
+                    </div>
+                </li>
+
                 <!-- Profil -->
                 <li class="nav-item">
                     <a href="{{ route('password.admin.change') }}"
@@ -339,7 +358,8 @@
     <!-- Footer -->
     <footer class="bg-white shadow text-center">
         &copy; {{ date('Y') }}
-        <a href="https://sobadanu.com" target="_blank" class="text-muted text-decoration-none fw-semibold hover-link">
+        <a href="https://sobadanu.com" target="_blank"
+            class="text-muted text-decoration-none fw-semibold hover-link">
             SobaDanu - Full Stack Developer
         </a>
         &nbsp;|&nbsp;

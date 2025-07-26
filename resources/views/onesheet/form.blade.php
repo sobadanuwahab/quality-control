@@ -53,15 +53,6 @@
                     <label for="jumlah" class="form-label">Jumlah</label>
                     <input type="number" name="jumlah" id="jumlah" class="form-control" required>
                 </div>
-                <div class="mb-3">
-                    <label for="keterangan" class="form-label">Keterangan</label>
-                    <select name="keterangan" id="keterangan" class="form-select" required>
-                        <option value="" disabled selected>Pilih keterangan</option>
-                        <option value="BELUM TAYANG">BELUM TAYANG</option>
-                        <option value="SEDANG TAYANG">SEDANG TAYANG</option>
-                        <option value="SUDAH TAYANG">SUDAH TAYANG</option>
-                    </select>
-                </div>
 
                 <button type="submit" class="btn btn-success">
                     <i class="bi bi-save me-1"></i> Simpan

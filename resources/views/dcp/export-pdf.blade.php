@@ -25,6 +25,8 @@
 
         th {
             background-color: #367fa9;
+            color: white;
+            text-align: center;
         }
 
         h2 {
@@ -41,13 +43,13 @@
     <table>
         <thead>
             <tr>
-                <th style="text-align: center; color: white;">No</th>
-                <th style="text-align: center; color: white;">Judul Film</th>
-                <th style="text-align: center; color: white;">Aspect Ratio</th>
-                <th style="text-align: center; color: white;">Format Sound</th>
-                <th style="text-align: center; color: white;">Status KDM</th>
-                <th style="text-align: center; color: white;">Lokasi Penyimpanan</th>
-                <th style="text-align: center; color: white;">Keterangan</th>
+                <th>No</th>
+                <th>Judul Film</th>
+                <th>Aspect Ratio</th>
+                <th>Format Sound</th>
+                <th>Status KDM</th>
+                <th>Lokasi Penyimpanan</th>
+                <th>Keterangan</th>
             </tr>
         </thead>
         <tbody>
@@ -66,6 +68,14 @@
                         } elseif ($keterangan === 'sudah tayang') {
                             $colorStyle = 'color:red; font-weight:bold;';
                         }
+
+                        // Konversi lokasiPenyimpanan ke string jika array
+                        $lokasi = '-';
+                        if (isset($film['lokasiPenyimpanan'])) {
+                            $lokasi = is_array($film['lokasiPenyimpanan'])
+                                ? implode(', ', $film['lokasiPenyimpanan'])
+                                : $film['lokasiPenyimpanan'];
+                        }
                     @endphp
                     <tr>
                         <td style="text-align: center; {{ $colorStyle }}">{{ $no++ }}</td>
@@ -73,8 +83,7 @@
                         <td style="text-align: center; {{ $colorStyle }}">{{ $film['formatFilm'] ?? '-' }}</td>
                         <td style="text-align: center; {{ $colorStyle }}">{{ $film['sound'] ?? '-' }}</td>
                         <td style="text-align: center; {{ $colorStyle }}">{{ $film['statusKdm'] ?? '-' }}</td>
-                        <td style="text-align: center; {{ $colorStyle }}">{{ $film['lokasiPenyimpanan'] ?? '-' }}
-                        </td>
+                        <td style="text-align: center; {{ $colorStyle }}">{{ $lokasi }}</td>
                         <td style="text-align: center; {{ $colorStyle }}">{{ $film['keterangan'] ?? '-' }}</td>
                     </tr>
                 @endforeach

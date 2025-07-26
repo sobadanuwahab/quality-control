@@ -43,7 +43,9 @@
                     <td class="{{ $textClass }}">{{ $film['formatFilm'] ?? '-' }}</td>
                     <td class="{{ $textClass }}">{{ $film['sound'] ?? '-' }}</td>
                     <td class="{{ $textClass }}">{{ $film['statusKdm'] ?? '-' }}</td>
-                    <td class="{{ $textClass }}">{{ $film['lokasiPenyimpanan'] ?? '-' }}</td>
+                    <td class="{{ $textClass }}">
+                        {{ isset($film['lokasiPenyimpanan']) ? implode(', ', (array) $film['lokasiPenyimpanan']) : '-' }}
+                    </td>
                     <td
                         class="
                         @if (isset($film['keterangan'])) @if (strtolower($film['keterangan']) === 'sudah tayang') text-danger fw-bold

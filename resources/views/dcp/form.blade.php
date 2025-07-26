@@ -69,9 +69,19 @@
                                     <option value="Expired">Expired</option>
                                 </select>
                             </div>
-                            <div class="col-md-2">
-                                <label class="form-label">Lokasi Penyimpanan</label>
-                                <input type="text" name="film_details[0][lokasiPenyimpanan]" class="form-control">
+                            <div class="col-md-4 my-2">
+                                <label class="form-label d-block">Lokasi Penyimpanan</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach ($locations as $loc)
+                                        <div class="form-check" style="width: 48%;">
+                                            <input class="form-check-input" type="checkbox"
+                                                name="film_details[0][lokasiPenyimpanan][]" value="{{ $loc }}"
+                                                id="lokasi_0_{{ $loop->index }}">
+                                            <label class="form-check-label"
+                                                for="lokasi_0_{{ $loop->index }}">{{ $loc }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                         <div class="mt-3">
@@ -103,46 +113,55 @@
 
 @push('scripts')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            let index = 1;
+        const locations = @json($locations);
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let filmIndex =
+                {{ count(old('film_details', [0])) }}; // Hitung index awal berdasarkan jumlah field lama atau default 1
 
-            document.getElementById('add-film-row').addEventListener('click', function() {
-                const wrapper = document.getElementById('film-detail-wrapper');
+            document.getElementById("add-film-row").addEventListener("click", function() {
+                const container = document.getElementById("film-rows");
+
+                let lokasiHTML = '<div class="col-md-4">' +
+                    '<label class="form-label d-block">Lokasi Penyimpanan</label>' +
+                    '<div class="d-flex flex-wrap gap-2">';
+
+                locations.forEach((loc, locIndex) => {
+                    lokasiHTML += `
+                    <div class="form-check" style="width: 48%;">
+                        <input class="form-check-input" type="checkbox"
+                            name="film_details[${filmIndex}][lokasiPenyimpanan][]" value="${loc}"
+                            id="lokasi_${filmIndex}_${locIndex}">
+                        <label class="form-check-label" for="lokasi_${filmIndex}_${locIndex}">${loc}</label>
+                    </div>`;
+                });
+
+                lokasiHTML += '</div></div>';
 
                 const html = `
-                <div class="film-row mb-4 border rounded p-3">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label class="form-label">Judul Film</label>
-                            <input type="text" name="film_details[${index}][judulFilm]" class="form-control" required>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Aspect Ratio</label>
-                            <input type="text" name="film_details[${index}][formatFilm]" class="form-control">
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Format Sound</label>
-                            <input type="text" name="film_details[${index}][sound]" class="form-control">
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Status KDM</label>
-                            <select name="film_details[${index}][statusKdm]" class="form-select" required>
-                                <option value="" disabled selected>Pilih status</option>
-                                <option value="Ready">Ready</option>
-                                <option value="Not Ready">Not Ready</option>
-                                <option value="Expired">Expired</option>
-                            </select>
-                        </div>
-                        <div class="col-md-2">
-                            <label class="form-label">Lokasi Penyimpanan</label>
-                            <input type="text" name="film_details[${index}][lokasiPenyimpanan]" class="form-control">
-                        </div>
+                <div class="row mb-3 border-top pt-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Judul Film</label>
+                        <input type="text" name="film_details[${filmIndex}][judulFilm]" class="form-control" required>
                     </div>
-                    <div class="mt-3">
+                    <div class="col-md-2">
+                        <label class="form-label">Format Film</label>
+                        <input type="text" name="film_details[${filmIndex}][formatFilm]" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Sound</label>
+                        <input type="text" name="film_details[${filmIndex}][sound]" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">Status KDM</label>
+                        <input type="text" name="film_details[${filmIndex}][statusKdm]" class="form-control">
+                    </div>
+                    ${lokasiHTML}
+                    <div class="col-md-3 mt-3">
                         <label class="form-label">Keterangan</label>
-                        <select name="film_details[${index}][keterangan]" class="form-select" required>
-                            <option value="" disabled selected>Pilih keterangan</option>
-                            <option value="Belum Tayang">Belum Tayang</option>
+                        <select name="film_details[${filmIndex}][keterangan]" class="form-select">
+                            <option value="">-- Pilih --</option>
                             <option value="Sedang Tayang">Sedang Tayang</option>
                             <option value="Sudah Tayang">Sudah Tayang</option>
                         </select>
@@ -150,12 +169,11 @@
                 </div>
             `;
 
-                wrapper.insertAdjacentHTML('beforeend', html);
-                index++;
+                container.insertAdjacentHTML("beforeend", html);
+                filmIndex++;
             });
         });
     </script>
-
     <script>
         // Auto dismiss alert setelah 3 detik
         setTimeout(function() {

@@ -15,7 +15,8 @@ class DcpController extends Controller
   // ✅ Form input DCP
   public function form()
   {
-    return view('dcp.form');
+    $locations = ['Library', 'IMAX', 'Studio 1', 'Studio 2', 'Studio 3', 'Studio 4', 'Studio 5', 'Studio 6', 'Studio 1 Premiere', 'Studio 2 Premiere']; // Tambah lokasi sesuai kebutuhan
+    return view('dcp.form', compact('locations'));
   }
 
   // ✅ Simpan data baru
@@ -31,7 +32,8 @@ class DcpController extends Controller
       'film_details.*.statusKdm' => 'required|string',
       'film_details.*.formatFilm' => 'nullable|string',
       'film_details.*.keterangan' => 'nullable|string',
-      'film_details.*.lokasiPenyimpanan' => 'nullable|string',
+      'film_details.*.lokasiPenyimpanan' => 'nullable|array',
+      'film_details.*.lokasiPenyimpanan.*' => 'string',
     ]);
 
     DcpReport::create([
@@ -125,7 +127,8 @@ class DcpController extends Controller
       ? json_decode($dcp->film_details, true)
       : $dcp->film_details;
 
-    return view('dcp.edit', compact('dcp'));
+    $locations = ['Library', 'IMAX', 'Studio 1', 'Studio 2', 'Studio 3', 'Studio 4', 'Studio 5', 'Studio 6', 'Studio 1 Premiere', 'Studio 2 Premiere'];
+    return view('dcp.edit', compact('dcp', 'locations'));
   }
 
   public function update(Request $request, $id)

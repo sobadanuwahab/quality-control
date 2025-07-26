@@ -13,6 +13,7 @@ use App\Http\Controllers\{
   DcpController,
   OnesheetController,
   MaintenanceController,
+  AssetController,
 };
 use App\Http\Controllers\AdminViewController;
 
@@ -115,6 +116,12 @@ Route::get('/maintenance/hvac/laporan/pdf', [MaintenanceController::class, 'expo
 
 Route::middleware(['auth'])->group(function () {
   Route::get('/admin/data-user', [AdminViewController::class, 'userData'])->name('admin.userdata');
+});
+
+Route::prefix('asset')->middleware('auth:admin')->group(function () {
+  Route::get('/asset/create', [AssetController::class, 'create'])->name('asset.create');
+  Route::post('/', [AssetController::class, 'store'])->name('asset.store');
+  Route::get('/', [AssetController::class, 'index'])->name('asset.index');
 });
 
 require __DIR__ . '/auth.php';
