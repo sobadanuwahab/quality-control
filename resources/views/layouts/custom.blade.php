@@ -161,11 +161,16 @@
             border-color: #d5a000 !important;
         }
 
-
         @media (max-width: 768px) {
             .sidebar {
-                transform: translateX(-100%);
                 position: fixed;
+                top: 60px;
+                left: 0;
+                bottom: 0;
+                width: 250px;
+                background-color: #333;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
                 z-index: 1040;
             }
 
@@ -173,8 +178,17 @@
                 transform: translateX(0);
             }
 
+            .main-content {
+                margin-left: 0 !important;
+                padding: 1.5rem 1rem;
+            }
+
+            footer {
+                margin-left: 0 !important;
+                padding: 1rem 1rem;
+            }
+
             .overlay {
-                display: block;
                 position: fixed;
                 top: 60px;
                 left: 0;
@@ -182,15 +196,11 @@
                 bottom: 0;
                 background-color: rgba(0, 0, 0, 0.4);
                 z-index: 1035;
-            }
-
-            .overlay.hidden {
                 display: none;
             }
 
-            .main-content,
-            footer {
-                margin-left: 0;
+            .overlay.show {
+                display: block;
             }
         }
     </style>
@@ -360,7 +370,7 @@
         &copy; {{ date('Y') }}
         <a href="https://sobadanu.com" target="_blank"
             class="text-muted text-decoration-none fw-semibold hover-link">
-            SobaDanu - Full Stack Developer
+            Soba Danu_Web Developer
         </a>
         &nbsp;|&nbsp;
         <a href="https://github.com/sobadanuwahab" target="_blank" class="text-dark mx-1 hover-icon">
@@ -389,13 +399,29 @@
             const isMobile = window.innerWidth <= 768;
 
             if (isMobile) {
-                sidebar.classList.toggle('show');
-                overlay.classList.toggle('hidden');
+                const isSidebarOpen = sidebar.classList.toggle('show');
+                overlay.classList.toggle('show', isSidebarOpen);
             } else {
-                sidebar.classList.toggle('slide-hidden'); // pakai transform
+                sidebar.classList.toggle('slide-hidden');
                 mainContent.classList.toggle('full-width');
                 footer.classList.toggle('full-width');
             }
+        });
+
+        // Klik di luar sidebar akan menutup sidebar (mobile)
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+        });
+
+        // Tutup sidebar setelah klik salah satu link di sidebar (mobile)
+        document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('show');
+                    overlay.classList.remove('show');
+                }
+            });
         });
     </script>
 

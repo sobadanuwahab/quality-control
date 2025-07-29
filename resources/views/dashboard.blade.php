@@ -3,7 +3,7 @@
 @php use Illuminate\Support\Facades\Auth; @endphp
 
 @section('content')
-    <div class="page-content mx-auto" style="max-width: 2400px;">
+    <div class="page-content mx-4">
         @if (Auth::user()->role === 'admin')
             {{-- Tampilan Khusus Admin --}}
             <div class="text-center mt-5">
@@ -94,10 +94,10 @@
                 });
 
                 // Bagi semua data DCP jadi grup isi 4
-                $chunks = $dcpReports->chunk(5);
+                $chunks = $dcpReports->chunk(4);
             @endphp
 
-            <div class="container-fluid py-4">
+            <div class="container-fluid py-2">
                 <div id="carouselDcp" class="carousel slide" data-bs-ride="carousel" data-bs-interval="8000">
                     <h4 class="fw-bold mb-3" style="color: #367fa9">
                         <i class="bi bi-collection-play me-1"></i> DCP Reports Update
@@ -106,33 +106,33 @@
                     <div class="carousel-inner w-full h-[400px] overflow-hidden">
                         @foreach ($chunks as $index => $group)
                             <div class="carousel-item {{ $loop->first ? 'active' : '' }} w-full h-full">
-                                <div class="d-flex justify-content-center gap-4 flex-wrap py-4 px-3 overflow-y-auto h-full"
-                                    style="cursor: pointer" onmouseenter="pauseCarousel()" onmouseleave="resumeCarousel()">
+                                <div class="d-flex justify-content-center align-items-start gap-4 flex-wrap py-4 px-3 overflow-y-auto h-full"
+                                    style="cursor: pointer; text-align:left" onmouseenter="pauseCarousel()"
+                                    onmouseleave="resumeCarousel()">
                                     @foreach ($group as $item)
-                                        <div class="card card-modern dcp-card w-[200px]" style="cursor: pointer"
+                                        <div class="dcp-card responsive-card bg-white shadow-sm rounded-md overflow-hidden border"
+                                            style="cursor: pointer"
                                             data-title="{{ $item->film_details[0]['judulFilm'] ?? '' }}"
                                             onclick="openTrailerModal(this)" onmouseenter="pauseCarousel()"
                                             onmouseleave="resumeCarousel()">
                                             @if (!empty($item->poster_url))
-                                                <div
-                                                    class="poster-wrapper
-                                    w-full h-[250px] overflow-hidden">
+                                                <div class="poster-wrapper w-full h-[180px] overflow-hidden">
                                                     <img src="{{ $item->poster_url }}"
                                                         alt="Poster {{ $item->film_details[0]['judulFilm'] ?? 'Film' }}"
                                                         class="poster-img w-full h-full object-cover">
                                                 </div>
                                             @endif
-                                            <div class="card-body">
-                                                <h6 class="card-title mb-0 line-clamp-title"
+                                            <div class="card-body p-2">
+                                                <h6 class="card-title mb-0 line-clamp-title text-xs sm:text-sm lg:text-base"
                                                     title="{{ $item->film_details[0]['judulFilm'] ?? '-' }}"
                                                     style="color: #367fa9">
                                                     <i class="bi bi-film me-1"></i>
                                                     {{ $item->film_details[0]['judulFilm'] ?? '-' }}
                                                 </h6>
-                                                <p class="mb-1 text-muted">Penerima:
+                                                <p class="mb-1 text-muted text-[5px] sm:text-xs lg:text-sm">Penerima:
                                                     <strong>{{ $item->nama_penerima ?? '-' }}</strong>
                                                 </p>
-                                                <p class="mb-0 text-muted">Tanggal:
+                                                <p class="mb-0 text-muted text-[5px] sm:text-xs lg:text-sm">Tanggal:
                                                     <strong>{{ \Carbon\Carbon::parse($item->tanggal_penerimaan)->format('d M Y') }}</strong>
                                                 </p>
                                             </div>
@@ -325,6 +325,11 @@
     </script>
 
     <style>
+        .page-content {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
         .card-modern {
             border-width: 5px !important;
             border-radius: 20px;
@@ -392,6 +397,15 @@
             image-rendering: auto;
         }
 
+        /* Ukuran default untuk desktop */
+        .responsive-card {
+            width: 200px;
+        }
+
+        .responsive-card .poster-wrapper {
+            height: 180px;
+        }
+
         @media (max-width: 768px) {
             .dcp-card {
                 width: 150px;
@@ -399,6 +413,51 @@
 
             .poster-wrapper {
                 height: 220px;
+            }
+
+            .page-content {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            /* Ukuran tablet & mobile */
+            .responsive-card {
+                width: 140px !important;
+            }
+
+            .responsive-card .poster-wrapper {
+                height: 120px !important;
+            }
+
+            .responsive-card .card-body {
+                font-size: 12px !important;
+            }
+
+            .responsive-card .card-title {
+                font-size: 13px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            /* Lebih kecil di mobile kecil */
+            .responsive-card {
+                width: 120px !important;
+            }
+
+            .responsive-card .poster-wrapper {
+                height: 100px !important;
+            }
+
+            .responsive-card .card-body {
+                font-size: 11px !important;
+            }
+
+            .responsive-card .card-title {
+                font-size: 12px !important;
             }
         }
     </style>
