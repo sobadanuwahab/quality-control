@@ -3,19 +3,19 @@
 @section('content')
     <main class="flex-grow p-4">
         <div class="container mx-auto">
-            <h2 class="mt-4 mb-4" style="color: #367fa9"><i class="bi bi-pencil-square me-2"></i><strong> Input
-                    Data Meteran</strong>
+            <h2 class="mt-4 mb-4 fw-bold" style="color: #367fa9">
+                <i class="bi bi-pencil-square me-2"></i> Input Data Meteran
             </h2>
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
-            <form method="POST" action="{{ route('meteran.store') }}" class="row g-3">
+            <form method="POST" action="{{ route('meteran.store') }}">
                 @csrf
 
                 {{-- Tanggal --}}
-                <div class="col-2">
+                <div class="mb-3">
                     <label for="tanggal" class="form-label fw-semibold">
                         <i class="bi bi-calendar-check me-1"></i> Tanggal
                     </label>
@@ -24,7 +24,7 @@
                 </div>
 
                 {{-- Jenis Meteran --}}
-                <div class="col-12">
+                <div class="mb-3">
                     <label for="nama_meteran" class="form-label fw-semibold">
                         <i class="bi bi-file-earmark-text me-1"></i> Jenis Meteran
                     </label>
@@ -36,8 +36,8 @@
                     </select>
                 </div>
 
-                {{-- Meteran Awal --}}
-                <div class="col-12">
+                {{-- Stand Awal --}}
+                <div class="mb-3">
                     <label for="awal" class="form-label fw-semibold">
                         <i class="bi bi-box-arrow-in-left me-1"></i> Stand Awal
                     </label>
@@ -47,8 +47,8 @@
                     </div>
                 </div>
 
-                {{-- Meteran Akhir --}}
-                <div class="col-12">
+                {{-- Stand Akhir --}}
+                <div class="mb-3">
                     <label for="akhir" class="form-label fw-semibold">
                         <i class="bi bi-box-arrow-in-right me-1"></i> Stand Akhir
                     </label>
@@ -59,8 +59,8 @@
                 </div>
 
                 {{-- Submit --}}
-                <div class="col-12 mt-3">
-                    <button type="submit" class="btn btn-primary">
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-primary w-100 w-md-auto">
                         <i class="bi bi-save2 me-1"></i> Simpan Data
                     </button>
                 </div>
@@ -69,29 +69,6 @@
     </main>
 
     @push('scripts')
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const selectMeteran = document.querySelector('select[name="nama_meteran"]');
-                const awalInput = document.querySelector('input[name="awal"]');
-
-                selectMeteran.addEventListener('change', async function() {
-                    const selected = this.value;
-                    if (!selected) return;
-
-                    try {
-                        const res = await fetch(
-                            `/meteran/last-akhir?nama_meteran=${encodeURIComponent(selected)}`);
-                        const data = await res.json();
-                        if (data.akhir !== undefined) {
-                            awalInput.value = data.akhir;
-                        }
-                    } catch (err) {
-                        console.error("Gagal mengambil data terakhir:", err);
-                    }
-                });
-            });
-        </script>
-
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 const selectMeteran = document.querySelector('select[name="nama_meteran"]');
