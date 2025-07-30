@@ -106,6 +106,12 @@ Route::post('/maintenance/hvac', [MaintenanceController::class, 'storeHvac'])->n
 Route::get('/maintenance/projector/laporan', [MaintenanceController::class, 'laporanProjector'])->name('maintenance.projector.laporan');
 Route::get('/maintenance/hvac/laporan', [MaintenanceController::class, 'laporanHvac'])->name('maintenance.hvac.laporan');
 
+Route::middleware(['auth'])->prefix('maintenance/projector')->group(function () {
+  Route::get('/maintenance/projector/{id}/edit', [MaintenanceController::class, 'editProjector'])->name('maintenance.projector.edit');
+  Route::put('/maintenance/projector/{id}', [MaintenanceController::class, 'updateProjector'])->name('maintenance.projector.update');
+  Route::delete('/maintenance/projector/{id}', [MaintenanceController::class, 'destroyProjector'])->name('maintenance.projector.destroy');
+});
+
 Route::patch('/maintenance/hvac/{id}/done', [MaintenanceController::class, 'markAsDone'])->name('maintenance.hvac.done');
 
 // Export PDF Maintenance

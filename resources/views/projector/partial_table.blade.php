@@ -9,6 +9,11 @@
             <th style="width: 12%;">Studio</th>
             <th>Barang/Komponen Diganti</th>
             <th>Keterangan</th>
+            @auth
+                @if (auth()->user()->role === 'admin')
+                    <th>Aksi</th>
+                @endif
+            @endauth
         </tr>
     </thead>
     <tbody>
@@ -22,6 +27,22 @@
                 <td>{{ $row->studio }}</td>
                 <td>{{ $row->komponen_diganti ?? '-' }}</td>
                 <td>{{ $row->keterangan }}</td>
+                @auth
+                    @if (auth()->user()->role === 'admin')
+                        <td>
+                            <a href="{{ route('maintenance.projector.edit', $row->id) }}" class="btn btn-sm btn-warning">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+
+                            <form action="{{ route('maintenance.projector.destroy', $row->id) }}" method="POST"
+                                class="d-inline" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger"><i class="bi bi-trash"></i> Hapus</button>
+                            </form>
+                        </td>
+                    @endif
+                @endauth
             </tr>
         @empty
             <tr>
