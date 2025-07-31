@@ -78,3 +78,6 @@
         @endforelse
     </tbody>
 </table>
+<div class="mt-3">
+    {{ $dcpList->links('pagination::bootstrap-5') }}
+</div>

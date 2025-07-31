@@ -17,5 +17,6 @@ class Asset extends Model
     'label_fungsi',
     'penempatan',
     'spesifikasi_detail',
+    'foto'
   ];
 }

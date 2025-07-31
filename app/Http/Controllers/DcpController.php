@@ -53,23 +53,16 @@ class DcpController extends Controller
   {
     $admin = Auth::user();
 
-    // Admin bisa lihat semua data, selain admin hanya lihat miliknya sendiri
-    $dcpList = $admin->role === 'admin'
-      ? DcpReport::orderByDesc('tanggal_penerimaan')->get()
-      : DcpReport::where('admin_id', $admin->id)->orderByDesc('tanggal_penerimaan')->get();
+    // Ambil data tergantung role
+    $query = $admin->role === 'admin'
+      ? DcpReport::query()
+      : DcpReport::where('admin_id', $admin->id);
 
-    // Decode semua film_details
-    foreach ($dcpList as $item) {
-      $item->film_details = is_string($item->film_details)
-        ? json_decode($item->film_details, true)
-        : $item->film_details;
-    }
-
-    // Filter jika ada keyword pencarian
+    // Search jika ada keyword
     if ($request->filled('search')) {
       $search = strtolower($request->search);
 
-      $dcpList = $dcpList->filter(function ($item) use ($search) {
+      $query = $query->get()->filter(function ($item) use ($search) {
         $details = is_string($item->film_details)
           ? json_decode($item->film_details, true)
           : $item->film_details;
@@ -86,10 +79,22 @@ class DcpController extends Controller
           stripos($item->pengirim, $search) !== false ||
           $judulMatch;
       });
+
+      // Karena hasilnya adalah Collection, kita perlu paginate manual
+      $dcpList = $query->values(); // Reset key index
+    } else {
+      $dcpList = $query->orderByDesc('tanggal_penerimaan')->paginate(6);
+    }
+
+    // Decode film_details
+    foreach ($dcpList as $item) {
+      $item->film_details = is_string($item->film_details)
+        ? json_decode($item->film_details, true)
+        : $item->film_details;
     }
 
     if ($request->ajax()) {
-      return view('dcp.table', compact('dcpList'));
+      return view('dcp.table', compact('dcpList'))->render();
     }
 
     return view('dcp.laporan', compact('dcpList'));

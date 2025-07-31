@@ -32,7 +32,20 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const input = document.getElementById('search-input');
-            if (!input) return; // proteksi kalau input tidak ada
+            const container = document.getElementById('table-container');
+
+            function fetchData(url) {
+                fetch(url, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(res => res.text())
+                    .then(html => {
+                        container.innerHTML = html;
+                        attachPagination(); // re-attach pagination links
+                    });
+            }
 
             let timeout = null;
 
@@ -41,17 +54,22 @@
                 const keyword = this.value;
 
                 timeout = setTimeout(() => {
-                    fetch(`{{ route('dcp.laporan') }}?search=${encodeURIComponent(keyword)}`, {
-                            headers: {
-                                'X-Requested-With': 'XMLHttpRequest'
-                            }
-                        })
-                        .then(res => res.text())
-                        .then(html => {
-                            document.getElementById('table-container').innerHTML = html;
-                        });
+                    const url =
+                        `{{ route('dcp.laporan') }}?search=${encodeURIComponent(keyword)}&page=1`;
+                    fetchData(url);
                 }, 300);
             });
+
+            function attachPagination() {
+                container.querySelectorAll('.pagination a').forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        fetchData(this.href);
+                    });
+                });
+            }
+
+            attachPagination(); // initial
         });
     </script>
 @endpush

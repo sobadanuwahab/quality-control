@@ -126,7 +126,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::prefix('asset')->middleware('auth:admin')->group(function () {
   Route::get('/asset/create', [AssetController::class, 'create'])->name('asset.create');
-  Route::post('/', [AssetController::class, 'store'])->name('asset.store');
+  Route::post('/store', [AssetController::class, 'store'])->name('asset.store');
   Route::get('/', [AssetController::class, 'index'])->name('asset.index');
 });
 
