@@ -15,7 +15,7 @@
                 @csrf
 
                 <div class="mb-3">
-                    <label for="grouping_asset">Grouping Asset</label>
+                    <label for="grouping_asset" class="form-label">Grouping Asset</label>
                     <select name="grouping_asset" class="form-control">
                         <option value="">--Pilih--</option>
                         <option value="IT OPERASIONAL">[CINEMA] IT OPERASIONAL</option>
@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="nama_asset">Nama Asset</label>
+                    <label for="nama_asset" class="form-label">Nama Asset</label>
                     <select name="nama_asset" class="form-control">
                         <option value="">--Pilih--</option>
                         <option value="Projector">Projector</option>
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="brand">Brand / Merek</label>
+                    <label for="brand" class="form-label">Brand / Merek</label>
                     <select name="brand" class="form-control">
                         <option value="">--Pilih--</option>
                         <option value="Barco">Barco</option>
@@ -55,22 +55,22 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="model_type">Model/Type</label>
+                    <label for="model_type" class="form-label">Model/Type</label>
                     <input type="text" name="model_type" class="form-control">
                 </div>
 
                 <div class="mb-3">
-                    <label for="serial_number">Serial Number</label>
+                    <label for="serial_number" class="form-label">Serial Number</label>
                     <input type="text" name="serial_number" class="form-control">
                 </div>
 
                 <div class="mb-3">
-                    <label for="label_fungsi">Label / Fungsi</label>
+                    <label for="label_fungsi" class="form-label">Label / Fungsi</label>
                     <input type="text" name="label_fungsi" class="form-control" placeholder="ex: POS ORDER 1">
                 </div>
 
                 <div class="mb-3">
-                    <label for="penempatan">Penempatan</label>
+                    <label for="penempatan" class="form-label">Penempatan</label>
                     <select name="penempatan" class="form-control">
                         <option value="">--Pilih--</option>
                         <option value="Ruang Centralize">Ruang Centralize</option>
@@ -94,12 +94,12 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="spesifikasi_detail">Spesifikasi Detail</label>
+                    <label for="spesifikasi_detail" class="form-label">Spesifikasi Detail</label>
                     <textarea name="spesifikasi_detail" class="form-control"></textarea>
                 </div>
 
                 <div class="mb-3">
-                    <label for="foto">Upload Foto Asset</label>
+                    <label for="foto" class="form-label">Upload Image Asset</label>
                     <input type="file" name="foto" class="form-control">
                 </div>
 

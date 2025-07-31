@@ -10,23 +10,44 @@
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
+            <form method="GET" action="{{ route('asset.index') }}" class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <input type="text" name="search" class="form-control" placeholder="Cari Nama Asset"
+                        value="{{ request('search') }}">
+                </div>
+                <div class="col-md-4">
+                    <select name="grouping_asset" class="form-control">
+                        <option value="">-- Semua Grouping Asset --</option>
+                        @foreach ($groupingOptions as $group)
+                            <option value="{{ $group }}" {{ request('grouping_asset') == $group ? 'selected' : '' }}>
+                                {{ $group }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                    <a href="{{ route('asset.index') }}" class="btn btn-secondary">Reset</a>
+                </div>
+            </form>
+
             <table class="table table-bordered table-striped">
                 <thead class="table-dark text-center align-middle">
                     <tr>
                         <th>No</th>
-                        <th>Grouping Asset</th>
+                        <th>Serial Number</th>
                         <th>Nama Asset</th>
-                        <th>Brand / Merek</th>
+                        <th>Brand / Merk</th>
                         <th>Model / Type</th>
                         <th>Penempatan</th>
-                        <th>Foto</th>
+                        <th>Picture</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($assets as $index => $asset)
                         <tr class="text-center align-middle">
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $asset->grouping_asset }}</td>
+                            <td>{{ $asset->serial_number }}</td>
                             <td>{{ $asset->nama_asset }}</td>
                             <td>{{ $asset->brand }}</td>
                             <td>{{ $asset->model_type }}</td>
@@ -48,7 +69,7 @@
                 </tbody>
             </table>
             <div class="mt-3">
-                {{ $assets->links() }}
+                {{ $assets->appends(request()->query())->links() }}
             </div>
         </div>
     </main>

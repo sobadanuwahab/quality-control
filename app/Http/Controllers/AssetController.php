@@ -39,9 +39,25 @@ class AssetController extends Controller
     return redirect()->back()->with('success', 'Asset berhasil ditambahkan!');
   }
 
-  public function index()
+  public function index(Request $request)
   {
-    $assets = \App\Models\Asset::latest()->paginate(8);
-    return view('asset.index', compact('assets'));
+    $query = Asset::query();
+
+    // Filter by Grouping Asset
+    if ($request->grouping_asset) {
+      $query->where('grouping_asset', $request->grouping_asset);
+    }
+
+    // Search by Nama Asset
+    if ($request->search) {
+      $query->where('nama_asset', 'like', '%' . $request->search . '%');
+    }
+
+    $assets = $query->paginate(10);
+
+    // Ambil semua opsi Grouping unik untuk dropdown filter
+    $groupingOptions = Asset::select('grouping_asset')->distinct()->pluck('grouping_asset');
+
+    return view('asset.index', compact('assets', 'groupingOptions'));
   }
 }
