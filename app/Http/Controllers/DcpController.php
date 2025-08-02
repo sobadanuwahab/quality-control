@@ -9,17 +9,16 @@ use App\Models\DcpReport;
 use App\Models\Admin;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class DcpController extends Controller
 {
-  // ✅ Form input DCP
   public function form()
   {
-    $locations = ['Library', 'IMAX', 'Studio 1', 'Studio 2', 'Studio 3', 'Studio 4', 'Studio 5', 'Studio 6', 'Studio 1 Premiere', 'Studio 2 Premiere']; // Tambah lokasi sesuai kebutuhan
+    $locations = ['Library', 'IMAX', 'Studio 1', 'Studio 2', 'Studio 3', 'Studio 4', 'Studio 5', 'Studio 6', 'Studio 1 Premiere', 'Studio 2 Premiere'];
     return view('dcp.form', compact('locations'));
   }
 
-  // ✅ Simpan data baru
   public function store(Request $request)
   {
     $request->validate([
@@ -48,25 +47,19 @@ class DcpController extends Controller
     return redirect()->back()->with('success', 'Data DCP berhasil disimpan.');
   }
 
-  // ✅ Tampilkan laporan
   public function laporan(Request $request)
   {
     $admin = Auth::user();
 
-    // Ambil data tergantung role
     $query = $admin->role === 'admin'
       ? DcpReport::query()
       : DcpReport::where('admin_id', $admin->id);
 
-    // Search jika ada keyword
+    // Search
     if ($request->filled('search')) {
       $search = strtolower($request->search);
-
-      $query = $query->get()->filter(function ($item) use ($search) {
-        $details = is_string($item->film_details)
-          ? json_decode($item->film_details, true)
-          : $item->film_details;
-
+      $filtered = $query->get()->filter(function ($item) use ($search) {
+        $details = is_string($item->film_details) ? json_decode($item->film_details, true) : $item->film_details;
         $judulMatch = false;
         foreach ($details as $film) {
           if (isset($film['judulFilm']) && stripos($film['judulFilm'], $search) !== false) {
@@ -74,23 +67,28 @@ class DcpController extends Controller
             break;
           }
         }
-
         return stripos($item->nama_penerima, $search) !== false ||
           stripos($item->pengirim, $search) !== false ||
           $judulMatch;
       });
 
-      // Karena hasilnya adalah Collection, kita perlu paginate manual
-      $dcpList = $query->values(); // Reset key index
+      // Manual pagination
+      $perPage = 6;
+      $page = $request->get('page', 1);
+      $dcpList = new LengthAwarePaginator(
+        $filtered->forPage($page, $perPage)->values(),
+        $filtered->count(),
+        $perPage,
+        $page,
+        ['path' => $request->url(), 'query' => $request->query()]
+      );
     } else {
       $dcpList = $query->orderByDesc('tanggal_penerimaan')->paginate(6);
     }
 
     // Decode film_details
     foreach ($dcpList as $item) {
-      $item->film_details = is_string($item->film_details)
-        ? json_decode($item->film_details, true)
-        : $item->film_details;
+      $item->film_details = is_string($item->film_details) ? json_decode($item->film_details, true) : $item->film_details;
     }
 
     if ($request->ajax()) {
@@ -100,7 +98,6 @@ class DcpController extends Controller
     return view('dcp.laporan', compact('dcpList'));
   }
 
-  // ✅ Export PDF
   public function exportPdf()
   {
     $adminId = Auth::id();
@@ -119,7 +116,6 @@ class DcpController extends Controller
     return $pdf->download('laporan_dcp_' . now()->format('Ymd_His') . '.pdf');
   }
 
-  // ✅ Form edit
   public function edit($id)
   {
     if (Auth::user()->role !== 'admin') {
@@ -127,10 +123,7 @@ class DcpController extends Controller
     }
 
     $dcp = DcpReport::findOrFail($id);
-
-    $dcp->film_details = is_string($dcp->film_details)
-      ? json_decode($dcp->film_details, true)
-      : $dcp->film_details;
+    $dcp->film_details = is_string($dcp->film_details) ? json_decode($dcp->film_details, true) : $dcp->film_details;
 
     $locations = ['Library', 'IMAX', 'Studio 1', 'Studio 2', 'Studio 3', 'Studio 4', 'Studio 5', 'Studio 6', 'Studio 1 Premiere', 'Studio 2 Premiere'];
     return view('dcp.edit', compact('dcp', 'locations'));
@@ -150,19 +143,19 @@ class DcpController extends Controller
     ]);
 
     $dcp = DcpReport::findOrFail($id);
-
-    $dcp->tanggal_penerimaan = \Carbon\Carbon::parse($request->tanggal_penerimaan)->format('Y-m-d');
-    $dcp->nama_penerima = $request->nama_penerima;
-    $dcp->pengirim = $request->pengirim;
-    $dcp->film_details = json_encode($request->film_details);
-    $dcp->save();
+    $dcp->update([
+      'tanggal_penerimaan' => Carbon::parse($request->tanggal_penerimaan)->format('Y-m-d'),
+      'nama_penerima' => $request->nama_penerima,
+      'pengirim' => $request->pengirim,
+      'film_details' => json_encode($request->film_details),
+    ]);
 
     return redirect()->route('dcp.laporan')->with('success', 'Data berhasil diperbarui.');
   }
 
   public function destroy($id)
   {
-    if (\Illuminate\Support\Facades\Auth::user()->role !== 'admin') {
+    if (Auth::user()->role !== 'admin') {
       abort(403, 'Akses ditolak.');
     }
 
@@ -172,7 +165,6 @@ class DcpController extends Controller
     return redirect()->route('dcp.laporan')->with('success', 'Data berhasil dihapus.');
   }
 
-  // ✅ Redirect jika ada akses ke /dcp (index)
   public function index()
   {
     return redirect()->route('dcp.laporan');
