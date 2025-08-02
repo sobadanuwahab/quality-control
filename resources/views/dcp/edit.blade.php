@@ -80,7 +80,8 @@
                             <div class="col-md-2 mb-3">
                                 <label class="form-label">Lokasi Penyimpanan</label>
                                 <input type="text" name="film_details[{{ $index }}][lokasiPenyimpanan]"
-                                    class="form-control" value="{{ $film['lokasiPenyimpanan'] ?? '' }}">
+                                    class="form-control"
+                                    value="{{ is_array($film['lokasiPenyimpanan'] ?? '') ? implode(', ', $film['lokasiPenyimpanan']) : $film['lokasiPenyimpanan'] ?? '' }}">
                             </div>
                         </div>
                         <div class="mt-2">
