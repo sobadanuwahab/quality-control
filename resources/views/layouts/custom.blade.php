@@ -366,20 +366,26 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white shadow text-center">
-        &copy; {{ date('Y') }}
-        <a href="https://sobadanu.com" target="_blank"
-            class="text-muted text-decoration-none fw-semibold hover-link">
-            Soba Danu_Web Developer
-        </a>
-        &nbsp;|&nbsp;
-        <a href="https://github.com/sobadanuwahab" target="_blank" class="text-dark mx-1 hover-icon">
-            <i class="bi bi-github fs-5"></i>
-        </a>
-        <a href="https://wa.me/6281314333352" target="_blank" class="text-dark mx-1 hover-icon">
-            <i class="bi bi-whatsapp fs-5"></i>
-        </a>
-        <span class="d-block mt-1 small text-muted">All rights reserved.</span>
+    <footer class="bg-white shadow text-center py-3">
+        <div class="d-flex flex-column flex-md-row justify-content-center align-items-center gap-2">
+            <span class="text-muted">
+                &copy; {{ date('Y') }}
+                <a href="https://sobadanu.com" target="_blank"
+                    class="text-muted text-decoration-none fw-semibold hover-link">
+                    SobaDanu | Fullstack Developer
+                </a>
+                <span class="small text-muted">All rights reserved.</span>
+            </span>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center mt-2 gap-2">
+            <a href="https://github.com/sobadanuwahab" target="_blank" class="text-dark hover-icon">
+                <i class="bi bi-github fs-5"></i>
+            </a>
+            <a href="https://wa.me/6281314333352" target="_blank" class="text-dark hover-icon">
+                <i class="bi bi-whatsapp fs-5"></i>
+            </a>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

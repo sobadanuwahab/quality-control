@@ -83,7 +83,7 @@ class DcpController extends Controller
         ['path' => $request->url(), 'query' => $request->query()]
       );
     } else {
-      $dcpList = $query->orderByDesc('tanggal_penerimaan')->paginate(6);
+      $dcpList = $query->orderByDesc('tanggal_penerimaan')->paginate(6)->withQueryString();
     }
 
     // Decode film_details

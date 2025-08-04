@@ -31,7 +31,7 @@
 @push('scripts')
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const input = document.getElementById('search-input');
+            const input = document.getElementById('search-dcp-input');
             const container = document.getElementById('table-container');
 
             function fetchData(url) {

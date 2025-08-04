@@ -42,25 +42,8 @@
                     })
                     .then(res => res.text())
                     .then(html => {
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(html, 'text/html');
-
-                        const newTbody = doc.querySelector('tbody');
-                        const newPagination = doc.querySelector('.pagination');
-
-                        // Replace tbody
-                        const currentTbody = container.querySelector('tbody');
-                        if (currentTbody && newTbody) {
-                            currentTbody.replaceWith(newTbody);
-                        }
-
-                        // Replace pagination
-                        const currentPagination = container.querySelector('.pagination');
-                        if (currentPagination && newPagination) {
-                            currentPagination.replaceWith(newPagination);
-                        }
-
-                        attachPagination(); // re-attach pagination listeners
+                        container.innerHTML = html;
+                        attachPagination(); // Re-attach events after replacing content
                     });
             }
 
@@ -78,15 +61,17 @@
             });
 
             function attachPagination() {
-                container.querySelectorAll('.pagination a').forEach(link => {
+                const links = container.querySelectorAll('.pagination a');
+                links.forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
-                        fetchData(this.href);
+                        const url = this.getAttribute('href');
+                        fetchData(url);
                     });
                 });
             }
 
-            attachPagination(); // initial
+            attachPagination(); // Initial call
         });
     </script>
 @endpush
