@@ -17,7 +17,10 @@
         </tr>
     </thead>
     <tbody>
-        @php $nomor = 1; @endphp
+        @php
+            $nomor = ($dcpList->currentPage() - 1) * $dcpList->perPage() + 1;
+        @endphp
+
         @forelse($dcpList as $dcp)
             @php
                 $details = is_string($dcp->film_details) ? json_decode($dcp->film_details, true) : $dcp->film_details;
@@ -34,7 +37,7 @@
                     }
                 @endphp
                 <tr class="text-center">
-                    <td class="{{ $textClass }}">{{ $nomor++ }}</td>
+                    <td>{{ $nomor++ }}</td>
                     <td class="{{ $textClass }}">
                         {{ \Carbon\Carbon::parse($dcp->tanggal_penerimaan)->format('d M Y') }}</td>
                     <td class="{{ $textClass }}">{{ $dcp->nama_penerima }}</td>

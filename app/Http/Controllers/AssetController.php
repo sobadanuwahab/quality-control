@@ -44,16 +44,32 @@ class AssetController extends Controller
     $query = Asset::query();
 
     // Filter by Grouping Asset
-    if ($request->grouping_asset) {
+    if ($request->filled('grouping_asset')) {
       $query->where('grouping_asset', $request->grouping_asset);
     }
 
     // Search by Nama Asset
-    if ($request->search) {
+    if ($request->filled('search')) {
       $query->where('nama_asset', 'like', '%' . $request->search . '%');
     }
 
-    $assets = $query->paginate(5);
+    // Manual pagination jika ada filter pencarian atau grouping
+    if ($request->filled('search') || $request->filled('grouping_asset')) {
+      $filtered = $query->get();
+      $perPage = 6;
+      $page = $request->get('page', 1);
+
+      $assets = new \Illuminate\Pagination\LengthAwarePaginator(
+        $filtered->forPage($page, $perPage)->values(),
+        $filtered->count(),
+        $perPage,
+        $page,
+        ['path' => $request->url(), 'query' => $request->query()]
+      );
+    } else {
+      // Default pagination
+      $assets = $query->orderByDesc('created_at')->paginate(6);
+    }
 
     // Ambil semua opsi Grouping unik untuk dropdown filter
     $groupingOptions = Asset::select('grouping_asset')->distinct()->pluck('grouping_asset');
