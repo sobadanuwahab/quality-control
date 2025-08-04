@@ -30,7 +30,10 @@
                     required>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update</button>
+            <div class="d-flex gap-2 mt-3">
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{{ route('laporan.index') }}" class="btn btn-secondary">Batal</a>
+            </div>
         </form>
     </div>
 @endsection
