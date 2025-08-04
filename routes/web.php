@@ -120,8 +120,16 @@ Route::get('/maintenance/projector/laporan/pdf', [MaintenanceController::class, 
 Route::get('/maintenance/hvac/laporan/pdf', [MaintenanceController::class, 'exportHvacPdf'])
   ->name('maintenance.hvac.pdf');
 
-Route::middleware(['auth'])->group(function () {
-  Route::get('/admin/data-user', [AdminViewController::class, 'userData'])->name('admin.userdata');
+// Route Dashboard Admin
+Route::middleware('auth:admin')->prefix('admin')->group(function () {
+  Route::get('/select-user', [AdminViewController::class, 'selectUser'])->name('admin.selectUser');
+  Route::get('/user-menu', [AdminViewController::class, 'showMenu'])->name('admin.userMenu');
+
+  Route::get('/user/{userId}/log-meteran', [AdminViewController::class, 'showLogMeteran'])->name('admin.logMeteran');
+  Route::get('/user/{userId}/dcp', [AdminViewController::class, 'showDcp'])->name('admin.dcp');
+  Route::get('/user/{userId}/onesheet', [AdminViewController::class, 'showOnesheet'])->name('admin.onesheet');
+  Route::get('/user/{userId}/projector', [AdminViewController::class, 'showProjector'])->name('admin.projector');
+  Route::get('/user/{userId}/hvac', [AdminViewController::class, 'showHvac'])->name('admin.hvac');
 });
 
 Route::prefix('asset')->middleware('auth:admin')->group(function () {

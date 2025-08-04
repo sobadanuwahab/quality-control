@@ -343,8 +343,8 @@
 
             @if ($user && $user->role === 'admin')
                 <li class="nav-item">
-                    <a href="{{ route('admin.userdata') }}"
-                        class="nav-link {{ request()->routeIs('admin.userdata') ? 'active' : '' }}">
+                    <a href="{{ route('admin.selectUser') }}"
+                        class="nav-link {{ request()->routeIs('admin.selectUser') ? 'active' : '' }}">
                         <i class="bi bi-people-fill"></i> Data Outlet
                     </a>
                 </li>

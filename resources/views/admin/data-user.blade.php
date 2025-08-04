@@ -5,12 +5,12 @@
         <h1 class="mb-4"><strong>Dashboard Hari Ini</strong> - {{ \Carbon\Carbon::now()->translatedFormat('l, d F Y') }}
         </h1>
 
-        <form method="GET" action="{{ route('admin.userdata') }}" class="mb-4">
-            <label for="admin_id" class="form-label">Pilih Outlet:</label>
-            <select name="admin_id" id="admin_id" class="form-select" onchange="this.form.submit()">
+        <form method="GET" action="{{ route('admin.userMenu') }}" class="mb-4">
+            <label for="user_id" class="form-label">Pilih Outlet:</label>
+            <select name="user_id" id="user_id" class="form-select" onchange="this.form.submit()">
                 <option value="" disabled selected>-- Pilih Outlet --</option>
                 @foreach ($users as $user)
-                    <option value="{{ $user->id }}" {{ request('admin_id') == $user->id ? 'selected' : '' }}>
+                    <option value="{{ $user->id }}" {{ request('user_id') == $user->id ? 'selected' : '' }}>
                         {{ $user->nama_bioskop }}
                     </option>
                 @endforeach
