@@ -53,7 +53,7 @@ class AssetController extends Controller
       $query->where('nama_asset', 'like', '%' . $request->search . '%');
     }
 
-    $assets = $query->paginate(10);
+    $assets = $query->paginate(5);
 
     // Ambil semua opsi Grouping unik untuk dropdown filter
     $groupingOptions = Asset::select('grouping_asset')->distinct()->pluck('grouping_asset');
