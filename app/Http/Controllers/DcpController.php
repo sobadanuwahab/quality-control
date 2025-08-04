@@ -58,7 +58,7 @@ class DcpController extends Controller
     // Search
     if ($request->filled('search')) {
       $search = strtolower($request->search);
-      $filtered = $query->get()->filter(function ($item) use ($search) {
+      $filtered = $query->orderByDesc('tanggal_penerimaan')->get()->filter(function ($item) use ($search) {
         $details = is_string($item->film_details) ? json_decode($item->film_details, true) : $item->film_details;
         $judulMatch = false;
         foreach ($details as $film) {
