@@ -42,8 +42,25 @@
                     })
                     .then(res => res.text())
                     .then(html => {
-                        container.innerHTML = html;
-                        attachPagination(); // re-attach pagination links
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(html, 'text/html');
+
+                        const newTbody = doc.querySelector('tbody');
+                        const newPagination = doc.querySelector('.pagination');
+
+                        // Replace tbody
+                        const currentTbody = container.querySelector('tbody');
+                        if (currentTbody && newTbody) {
+                            currentTbody.replaceWith(newTbody);
+                        }
+
+                        // Replace pagination
+                        const currentPagination = container.querySelector('.pagination');
+                        if (currentPagination && newPagination) {
+                            currentPagination.replaceWith(newPagination);
+                        }
+
+                        attachPagination(); // re-attach pagination listeners
                     });
             }
 

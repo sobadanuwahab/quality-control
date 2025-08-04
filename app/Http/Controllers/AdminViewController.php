@@ -57,6 +57,9 @@ class AdminViewController extends Controller
   {
     $selectedUser = Admin::findOrFail($userId);
     $dcpList = DcpReport::where('admin_id', $userId)->paginate(6);
+    if (request()->ajax()) {
+      return view('dcp.table', compact('dcpList'))->render();
+    }
     return view('admin.data.dcp', compact('selectedUser', 'dcpList'));
   }
 

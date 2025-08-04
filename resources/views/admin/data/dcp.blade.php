@@ -14,7 +14,7 @@
                 </a>
 
                 <div class="col-auto">
-                    <input type="text" name="search" id="search-input" class="form-control me-1"
+                    <input type="text" name="search" id="search-dcp-input" class="form-control me-1"
                         placeholder="Search data..." style="max-width: 550px; min-width: 450px;">
                 </div>
             </div>
