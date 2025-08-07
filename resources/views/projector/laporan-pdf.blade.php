@@ -32,6 +32,15 @@
         <p><strong>Periode : </strong>{{ $tanggal_mulai }} s.d. {{ $tanggal_sampai }}</p>
     @endif
 
+    @php
+        $studioList = $data->pluck('studio')->unique()->filter()->values();
+    @endphp
+
+    @if ($studioList->count())
+        <p><strong>Lokasi : </strong>{{ $studioList->implode(', ') }}</p>
+    @endif
+
+
     <table>
         <thead style="background-color: #007bff; color: white;">
             <tr>
