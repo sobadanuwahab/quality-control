@@ -19,7 +19,7 @@
     <tbody>
         @forelse($data as $index => $row)
             <tr class="text-center">
-                <td>{{ $index + 1 }}</td>
+                <td>{{ $data->firstItem() + $index }}</td>
                 <td>{{ \Carbon\Carbon::parse($row->tanggal)->format('d-m-Y') }}</td>
                 <td>{{ $row->deskripsi }}</td>
                 <td>{{ $row->jenis_perangkat }}</td>
@@ -52,3 +52,6 @@
         @endforelse
     </tbody>
 </table>
+<div class="mt-3">
+    {{ $data->links('pagination::bootstrap-5') }}
+</div>

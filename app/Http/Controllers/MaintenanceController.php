@@ -143,17 +143,18 @@ class MaintenanceController extends Controller
 
     $query = MaintenanceProjector::where('admin_id', $adminId);
 
-    // Tambahkan filter tanggal jika tersedia
+    // Filter berdasarkan tanggal
     if ($request->filled('tanggal_mulai') && $request->filled('tanggal_sampai')) {
       $query->whereBetween('tanggal', [$request->tanggal_mulai, $request->tanggal_sampai]);
     }
 
-    // ✅ Filter berdasarkan studio jika dipilih dari dropdown
+    // Filter berdasarkan studio
     if ($request->filled('search')) {
       $query->where('studio', $request->search);
     }
 
-    $data = $query->orderBy('tanggal', 'desc')->get();
+    // Gunakan paginate, bukan get()
+    $data = $query->orderBy('tanggal', 'desc')->paginate(5)->withQueryString(); // ⬅️ penting agar filter tetap saat pindah halaman
 
     return view('projector.laporan', compact('data'));
   }
