@@ -222,7 +222,7 @@
     <div class="topbar shadow-sm">
         <!-- Logo -->
         <div class="logo">
-            <a href="/" class="text-decoration-none">
+            <a href="{{ route('dashboard') }}" class="text-decoration-none">
                 <img src="{{ asset('assets/images/cinemaxxi.png') }}" alt="Logo XXI" style="height: 32px;">
             </a>
         </div>
