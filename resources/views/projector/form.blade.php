@@ -33,7 +33,7 @@
                 {{-- Pilihan Jenis Perangkat --}}
                 <div class="mb-3">
                     <label for="jenis_perangkat" class="form-label">Jenis Perangkat</label>
-                    <select name="jenis_perangkat" id="jenis_perangkat" class="form-select" required>
+                    <select name="jenis_perangkat" id="jenis_perangkat" class="form-control select2" required>
                         <option value="" disabled selected>-- Pilih Jenis Perangkat --</option>
                         <option value="Projector">Projector</option>
                         <option value="Sound System">Sound System</option>
@@ -51,7 +51,7 @@
                 {{-- Pilihan Studio --}}
                 <div class="mb-3">
                     <label for="studio" class="form-label">Studio</label>
-                    <select name="studio" id="studio" class="form-select" required>
+                    <select name="studio" id="studio" class="form-control select2" required>
                         <option value="" disabled selected>-- Pilih Studio --</option>
                         <option value="Studio 1">Studio 1</option>
                         <option value="Studio 2">Studio 2</option>
@@ -59,8 +59,14 @@
                         <option value="Studio 4">Studio 4</option>
                         <option value="Studio 5">Studio 5</option>
                         <option value="Studio 6">Studio 6</option>
+                        <option value="Studio 7">Studio 7</option>
+                        <option value="Studio 8">Studio 8</option>
+                        <option value="Studio 9">Studio 9</option>
+                        <option value="Studio 10">Studio 10</option>
                         <option value="Studio Premiere 1">Studio Premiere 1</option>
                         <option value="Studio Premiere 2">Studio Premiere 2</option>
+                        <option value="Studio Premiere 3">Studio Premiere 3</option>
+                        <option value="Studio Premiere 4">Studio Premiere 4</option>
                         <option value="Studio IMAX">Studio IMAX</option>
                     </select>
                 </div>
@@ -96,5 +102,17 @@
                 fadeEffect.close();
             }
         }, 3000); // 3000ms = 3 detik
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "--Pilih--",
+                allowClear: true,
+                width: '100%',
+                dropdownAutoWidth: true,
+                minimumResultsForSearch: Infinity // ⛔ Hilangkan kotak pencarian
+            });
+        });
     </script>
 @endpush

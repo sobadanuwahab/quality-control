@@ -16,7 +16,7 @@
 
                 <div class="mb-3">
                     <label for="grouping_asset" class="form-label">Grouping Asset</label>
-                    <select name="grouping_asset" class="form-control">
+                    <select name="grouping_asset" class="form-control select2">
                         <option value="">--Pilih--</option>
                         <option value="IT OPERASIONAL">[CINEMA] IT OPERASIONAL</option>
                         <option value="PROYEKTOR">[CINEMA] PROYEKTOR</option>
@@ -27,30 +27,34 @@
 
                 <div class="mb-3">
                     <label for="nama_asset" class="form-label">Nama Asset</label>
-                    <select name="nama_asset" class="form-control">
+                    <select name="nama_asset" class="form-control select2">
                         <option value="">--Pilih--</option>
-                        <option value="Projector">Projector</option>
-                        <option value="Server">Server</option>
-                        <option value="Sound System">Sound System</option>
-                        <option value="HVAC Split Duct">HVAC Split Duct</option>
-                        <option value="HVAC Split Wall">HVAC Split Wall</option>
+                        <option value="Projector">PROJECTOR</option>
+                        <option value="Server">SERVER</option>
+                        <option value="Processor">PROCESSOR</option>
+                        <option value="Power Amplifier">POWER AMPLIFIER</option>
+                        <option value="Automation Controller (ACT)">AUTOMATION CONTROLLER (ACT)</option>
+                        <option value="Uninterruptible Power Supply (UPS)">UNINTERRUPTIBLE POWER SUPPLY (UPS)</option>
+                        <option value="Layar">LAYAR</option>
+                        <option value="HVAC Split Duct">HVAC SPLIT DUCT</option>
+                        <option value="HVAC Split Wall">HVAC SPLIT WALL</option>
                     </select>
                 </div>
 
                 <div class="mb-3">
                     <label for="brand" class="form-label">Brand / Merek</label>
-                    <select name="brand" class="form-control">
+                    <select name="brand" class="form-control select2">
                         <option value="">--Pilih--</option>
-                        <option value="Barco">Barco</option>
-                        <option value="Christie">Christie</option>
-                        <option value="Doremi">Doremi</option>
-                        <option value="Dolby">Dolby</option>
+                        <option value="Barco">BARCO</option>
+                        <option value="Christie">CHRISTIE</option>
+                        <option value="Doremi">DOREMI</option>
+                        <option value="Dolby">DOLBY</option>
                         <option value="QSC">QSC</option>
-                        <option value="Vive Audio">Vive Audio</option>
-                        <option value="Tica">Tica</option>
-                        <option value="York">York</option>
-                        <option value="TP-Link">TP-Link</option>
-                        <option value="D-Link">D-Link</option>
+                        <option value="Vive Audio">VIVE AUDIO</option>
+                        <option value="Tica">TICA</option>
+                        <option value="York">YORK</option>
+                        <option value="TP-Link">TP-LINK</option>
+                        <option value="D-Link">D-LINK</option>
                     </select>
                 </div>
 
@@ -66,30 +70,30 @@
 
                 <div class="mb-3">
                     <label for="label_fungsi" class="form-label">Label / Fungsi</label>
-                    <input type="text" name="label_fungsi" class="form-control" placeholder="ex: POS ORDER 1">
+                    <input type="text" name="label_fungsi" class="form-control">
                 </div>
 
                 <div class="mb-3">
                     <label for="penempatan" class="form-label">Penempatan</label>
-                    <select name="penempatan" class="form-control">
+                    <select name="penempatan" class="form-control select2">
                         <option value="">--Pilih--</option>
-                        <option value="Ruang Centralize">Ruang Centralize</option>
-                        <option value="Ruang Proj.Studio 1">Ruang Proj.Studio 1</option>
-                        <option value="Ruang Proj.Studio 2">Ruang Proj.Studio 2</option>
-                        <option value="Ruang Proj.Studio 3">Ruang Proj.Studio 3</option>
-                        <option value="Ruang Proj.Studio 4">Ruang Proj.Studio 4</option>
-                        <option value="Ruang Proj.Studio 5">Ruang Proj.Studio 5</option>
-                        <option value="Ruang Proj.Studio 6">Ruang Proj.Studio 6</option>
-                        <option value="Ruang Proj.Studio 7">Ruang Proj.Studio 7</option>
-                        <option value="Ruang Proj.Studio 8">Ruang Proj.Studio 8</option>
-                        <option value="Ruang Proj.Studio 9">Ruang Proj.Studio 9</option>
-                        <option value="Ruang Proj.Studio 10">Ruang Proj.Studio 10</option>
-                        <option value="Ruang Proj.Studio 11">Ruang Proj.Studio 11</option>
-                        <option value="Ruang Proj.Studio Premiere 1">Ruang Proj.Studio Premiere 1</option>
-                        <option value="Ruang Proj.Studio Premiere 2">Ruang Proj.Studio Premiere 2</option>
-                        <option value="Ruang Proj.Studio Premiere 3">Ruang Proj.Studio Premiere 3</option>
-                        <option value="Ruang Proj.Studio Premiere 4">Ruang Proj.Studio Premiere 4</option>
-                        <option value="Ruang Proj.Studio IMAX">Ruang Proj.Studio IMAX</option>
+                        <option value="Ruang Centralize">R. CENTRALIZE</option>
+                        <option value="Ruang Proj.Studio 1">R. PROJ.STUDIO 1</option>
+                        <option value="Ruang Proj.Studio 2">R. PROJ.STUDIO 2</option>
+                        <option value="Ruang Proj.Studio 3">R. PROJ.STUDIO 3</option>
+                        <option value="Ruang Proj.Studio 4">R. PROJ.STUDIO 4</option>
+                        <option value="Ruang Proj.Studio 5">R. PROJ.STUDIO 5</option>
+                        <option value="Ruang Proj.Studio 6">R. PROJ.STUDIO 6</option>
+                        <option value="Ruang Proj.Studio 7">R. PROJ.STUDIO 7</option>
+                        <option value="Ruang Proj.Studio 8">R. PROJ.STUDIO 8</option>
+                        <option value="Ruang Proj.Studio 9">R. PROJ.STUDIO 9</option>
+                        <option value="Ruang Proj.Studio 10">R. PROJ.STUDIO 10</option>
+                        <option value="Ruang Proj.Studio 11">R. PROJ.STUDIO 11</option>
+                        <option value="Ruang Proj.Studio Premiere 1">R. PROJ.STUDIO PREMIERE 1</option>
+                        <option value="Ruang Proj.Studio Premiere 2">R. PROJ.STUDIO PREMIERE 2</option>
+                        <option value="Ruang Proj.Studio Premiere 3">R. PROJ.STUDIO PREMIERE 3</option>
+                        <option value="Ruang Proj.Studio Premiere 4">R. PROJ.STUDIO PREMIERE 4</option>
+                        <option value="Ruang Proj.Studio IMAX">R. PROJ.STUDIO IMAX</option>
                     </select>
                 </div>
 
@@ -108,3 +112,17 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "--Pilih--",
+                allowClear: true,
+                width: '100%',
+                dropdownAutoWidth: true,
+                minimumResultsForSearch: Infinity // ⛔ Hilangkan kotak pencarian
+            });
+        });
+    </script>
+@endpush
