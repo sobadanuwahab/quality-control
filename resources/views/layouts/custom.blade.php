@@ -138,6 +138,11 @@
             margin-left: 70px;
         }
 
+        .hover-underline:hover {
+            text-decoration: underline !important;
+            cursor: pointer;
+        }
+
         /* Tambahkan ini ke CSS kamu */
         .sidebar.slide-hidden {
             transform: translateX(-100%);

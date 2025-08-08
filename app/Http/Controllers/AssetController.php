@@ -82,4 +82,52 @@ class AssetController extends Controller
 
     return view('asset.index', compact('assets', 'groupingOptions'));
   }
+
+  public function edit($id)
+  {
+    if (!\Illuminate\Support\Facades\Auth::check()) {
+      abort(403, 'Unauthorized');
+    }
+
+    $asset = Asset::findOrFail($id);
+    $groupingOptions = Asset::select('grouping_asset')->distinct()->pluck('grouping_asset');
+
+    return view('asset.edit', compact('asset', 'groupingOptions'));
+  }
+
+  public function update(Request $request, $id)
+  {
+    if (!\Illuminate\Support\Facades\Auth::check()) {
+      abort(403, 'Unauthorized');
+    }
+
+    $request->validate([
+      'serial_number' => 'required|string|max:255',
+      'nama_asset' => 'required|string|max:255',
+      'brand' => 'nullable|string|max:255',
+      'model_type' => 'nullable|string|max:255',
+      'label_fungsi' => 'nullable|string',
+      'spesifikasi_detail' => 'nullable|string',
+      'penempatan' => 'nullable|string|max:255',
+
+      'foto' => 'nullable|image|max:2048',
+    ]);
+
+    $asset = Asset::findOrFail($id);
+    $asset->serial_number = $request->serial_number;
+    $asset->nama_asset = $request->nama_asset;
+    $asset->brand = $request->brand;
+    $asset->model_type = $request->model_type;
+    $asset->label_fungsi = $request->label_fungsi;
+    $asset->spesifikasi_detail = $request->spesifikasi_detail;
+    $asset->penempatan = $request->penempatan;
+
+    if ($request->hasFile('foto')) {
+      $asset->foto = $request->file('foto')->store('asset', 'public');
+    }
+
+    $asset->save();
+
+    return redirect()->route('asset.index')->with('success', 'Asset berhasil diperbarui');
+  }
 }

@@ -14,7 +14,12 @@
         @forelse($assets as $index => $asset)
             <tr class="text-center align-middle">
                 <td>{{ ($assets->currentPage() - 1) * $assets->perPage() + $index + 1 }}</td>
-                <td>{{ $asset->serial_number }}</td>
+                <td>
+                    <a href="{{ route('asset.edit', $asset->id) }}"
+                        class="text-decoration-none text-primary hover-underline">
+                        {{ $asset->serial_number }}
+                    </a>
+                </td>
                 <td>{{ $asset->nama_asset }}</td>
                 <td>{{ $asset->brand }}</td>
                 <td>{{ $asset->model_type }}</td>

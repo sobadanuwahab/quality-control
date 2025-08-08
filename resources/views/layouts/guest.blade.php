@@ -22,7 +22,7 @@
         {{-- Logo Cinemaxxi --}}
         <div class="mb-1 text-center">
             <img src="{{ asset('assets/images/cinemaxxi.png') }}" alt="Cinemaxxi Logo" class="w-80 h-auto">
-            <p class="mt-1 text-base text-gray-400 font-semibold">Quality Control</p>
+            <p class="mt-1 text-base text-gray-400 font-semibold">Monitoring Technical Support</p>
         </div>
 
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">

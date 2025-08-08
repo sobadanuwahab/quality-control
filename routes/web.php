@@ -139,4 +139,9 @@ Route::prefix('asset')->middleware('auth:admin')->group(function () {
   Route::get('/', [AssetController::class, 'index'])->name('asset.index');
 });
 
+Route::middleware(['auth'])->group(function () {
+  Route::get('/asset/{id}/edit', [AssetController::class, 'edit'])->name('asset.edit');
+  Route::put('/asset/{id}', [AssetController::class, 'update'])->name('asset.update');
+});
+
 require __DIR__ . '/auth.php';
