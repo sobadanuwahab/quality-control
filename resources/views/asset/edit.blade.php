@@ -3,7 +3,9 @@
 @section('content')
     <main class="flex-grow p-4">
         <div class="container mx-auto">
-            <h2 class="fw-bold mb-4" style="color: #367fa9">Edit Asset</h2>
+            <h2 class="fw-bold mb-4" style="color: #367fa9">
+                <i class="bi bi-pencil-square me-2"></i>Edit Asset
+            </h2>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -63,9 +65,13 @@
                 <div class="mb-3">
                     <label for="foto" class="form-label">Foto (jika ingin ganti)</label>
                     <input type="file" name="foto" class="form-control" id="foto" accept="image/*">
+
                     @if ($asset->foto)
-                        <img src="{{ asset('storage/' . ltrim($asset->foto, 'public/')) }}" alt="Foto Asset" width="150"
-                            class="mt-2">
+                        <a href="{{ asset('storage/' . ltrim($asset->foto, 'public/')) }}" data-lightbox="asset-image"
+                            data-title="Foto Asset">
+                            <img src="{{ asset('storage/' . ltrim($asset->foto, 'public/')) }}" alt="Foto Asset"
+                                width="150" class="mt-2" style="cursor: pointer;">
+                        </a>
                     @endif
                 </div>
 
