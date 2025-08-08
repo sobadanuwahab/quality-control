@@ -61,15 +61,17 @@
             });
 
             function attachPagination() {
-                container.querySelectorAll('.pagination a').forEach(link => {
+                const links = container.querySelectorAll('.pagination a');
+                links.forEach(link => {
                     link.addEventListener('click', function(e) {
                         e.preventDefault();
-                        fetchData(this.href);
+                        const url = this.getAttribute('href');
+                        fetchData(url);
                     });
                 });
             }
 
-            attachPagination(); // initial
+            attachPagination(); // Initial call
         });
     </script>
 @endpush
