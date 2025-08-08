@@ -8,7 +8,7 @@
             {{-- Tampilan Khusus Admin --}}
             <div class="text-center mt-5">
                 <h1 class="fw-bold text-primary">Selamat datang di dashboard monitoring</h1>
-                <p class="text-muted">Silakan pilih menu di atas untuk melihat data pengguna.</p>
+                <p class="text-muted">Silakan pilih menu data outlet di samping untuk melihat data pengguna.</p>
             </div>
         @else
             {{-- Notifikasi Tambahan --}}
