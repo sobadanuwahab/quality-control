@@ -130,6 +130,7 @@ Route::middleware('auth:admin')->prefix('admin')->group(function () {
   Route::get('/user/{userId}/onesheet', [AdminViewController::class, 'showOnesheet'])->name('admin.onesheet');
   Route::get('/user/{userId}/projector', [AdminViewController::class, 'showProjector'])->name('admin.projector');
   Route::get('/user/{userId}/hvac', [AdminViewController::class, 'showHvac'])->name('admin.hvac');
+  Route::get('/user/{userId}/asset', [AdminViewController::class, 'showAsset'])->name('admin.asset');
 });
 
 Route::prefix('asset')->middleware('auth:admin')->group(function () {

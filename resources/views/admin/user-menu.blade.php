@@ -14,6 +14,8 @@
                 class="list-group-item list-group-item-action">Maintenance Projector</a>
             <a href="{{ route('admin.hvac', $selectedUser->id) }}"
                 class="list-group-item list-group-item-action">Maintenance HVAC</a>
+            <a href="{{ route('admin.asset', $selectedUser->id) }}" class="list-group-item list-group-item-action">Data
+                Asset</a>
         </div>
     </div>
 @endsection

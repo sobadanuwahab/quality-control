@@ -99,4 +99,35 @@ class AdminViewController extends Controller
       ->appends(request()->query());
     return view('admin.data.hvac', compact('selectedUser', 'data'));
   }
+
+  // 8. Tampilkan data Asset
+  public function showAsset(Request $request, $userId)
+  {
+    $selectedUser = Admin::findOrFail($userId);
+
+    // Query data asset milik user tertentu
+    $query = \App\Models\Asset::where('admin_id', $userId);
+
+    // Filter grouping_asset
+    if ($request->filled('grouping_asset')) {
+      $query->where('grouping_asset', $request->grouping_asset);
+    }
+
+    // Filter search nama_asset
+    if ($request->filled('search')) {
+      $query->where('nama_asset', 'like', '%' . $request->search . '%');
+    }
+
+    // Pagination
+    $assets = $query->orderBy('grouping_asset', 'desc')
+      ->paginate(6)
+      ->appends($request->query());
+
+    // Ambil semua opsi grouping unik untuk dropdown
+    $groupingOptions = \App\Models\Asset::select('grouping_asset')
+      ->distinct()
+      ->pluck('grouping_asset');
+
+    return view('admin.data.asset', compact('selectedUser', 'assets', 'groupingOptions'));
+  }
 }

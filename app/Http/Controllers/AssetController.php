@@ -42,7 +42,12 @@ class AssetController extends Controller
 
   public function index(Request $request)
   {
-    $query = Asset::where('admin_id', \Illuminate\Support\Facades\Auth::user()->id);
+    $query = Asset::query();
+
+    // Kalau user bukan admin, filter berdasarkan admin_id
+    if (\Illuminate\Support\Facades\Auth::user()->role !== 'admin') {
+      $query->where('admin_id', \Illuminate\Support\Facades\Auth::id());
+    }
 
     // Filter by Grouping Asset
     if ($request->filled('grouping_asset')) {
