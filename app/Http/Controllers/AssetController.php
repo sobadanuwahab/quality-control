@@ -28,6 +28,7 @@ class AssetController extends Controller
     ]);
 
     $requestData = $request->all();
+    $requestData['admin_id'] = \Illuminate\Support\Facades\Auth::user()->id;
 
     if ($request->hasFile('foto')) {
       $fotoPath = $request->file('foto')->store('assets', 'public');
@@ -41,7 +42,7 @@ class AssetController extends Controller
 
   public function index(Request $request)
   {
-    $query = Asset::query();
+    $query = Asset::where('admin_id', \Illuminate\Support\Facades\Auth::user()->id);
 
     // Filter by Grouping Asset
     if ($request->filled('grouping_asset')) {

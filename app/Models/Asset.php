@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Asset extends Model
 {
   protected $fillable = [
+    'admin_id',
     'outlet',
     'grouping_asset',
     'nama_asset',
