@@ -8,7 +8,10 @@
             </h2>
 
             @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
+                <div id="success-alert" class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
             @endif
 
             <form action="{{ route('asset.store') }}" method="POST" enctype="multipart/form-data">
@@ -29,15 +32,15 @@
                     <label for="nama_asset" class="form-label">Nama Asset</label>
                     <select name="nama_asset" class="form-control select2">
                         <option value="">--Pilih--</option>
-                        <option value="Projector">PROJECTOR</option>
-                        <option value="Server">SERVER</option>
-                        <option value="Processor">PROCESSOR</option>
-                        <option value="Power Amplifier">POWER AMPLIFIER</option>
-                        <option value="Automation Controller (ACT)">AUTOMATION CONTROLLER (ACT)</option>
-                        <option value="Uninterruptible Power Supply (UPS)">UNINTERRUPTIBLE POWER SUPPLY (UPS)</option>
-                        <option value="Layar">LAYAR</option>
-                        <option value="HVAC Split Duct">HVAC SPLIT DUCT</option>
-                        <option value="HVAC Split Wall">HVAC SPLIT WALL</option>
+                        <option value="PROJECTOR">PROJECTOR</option>
+                        <option value="SERVER">SERVER</option>
+                        <option value="PROCESSOR">PROCESSOR</option>
+                        <option value="POWER AMPLIFIER">POWER AMPLIFIER</option>
+                        <option value="AUTOMATION CONTROLLER (ACT)">AUTOMATION CONTROLLER (ACT)</option>
+                        <option value="UNINTERRUPTIBLE POWER SUPPLY (UPS)">UNINTERRUPTIBLE POWER SUPPLY (UPS)</option>
+                        <option value="LAYAR">LAYAR</option>
+                        <option value="HVAC SPLIT DUCT">HVAC SPLIT DUCT</option>
+                        <option value="HVAC SPLIT WALL">HVAC SPLIT WALL</option>
                     </select>
                 </div>
 
@@ -45,16 +48,16 @@
                     <label for="brand" class="form-label">Brand / Merek</label>
                     <select name="brand" class="form-control select2">
                         <option value="">--Pilih--</option>
-                        <option value="Barco">BARCO</option>
-                        <option value="Christie">CHRISTIE</option>
-                        <option value="Doremi">DOREMI</option>
-                        <option value="Dolby">DOLBY</option>
+                        <option value="BARCO">BARCO</option>
+                        <option value="CHRISTIE">CHRISTIE</option>
+                        <option value="DOREMI">DOREMI</option>
+                        <option value="DOLBY">DOLBY</option>
                         <option value="QSC">QSC</option>
-                        <option value="Vive Audio">VIVE AUDIO</option>
-                        <option value="Tica">TICA</option>
-                        <option value="York">YORK</option>
-                        <option value="TP-Link">TP-LINK</option>
-                        <option value="D-Link">D-LINK</option>
+                        <option value="VIVE AUDIO">VIVE AUDIO</option>
+                        <option value="TICA">TICA</option>
+                        <option value="YORK">YORK</option>
+                        <option value="TP-LINK">TP-LINK</option>
+                        <option value="D-LINK">D-LINK</option>
                     </select>
                 </div>
 
@@ -77,23 +80,23 @@
                     <label for="penempatan" class="form-label">Penempatan</label>
                     <select name="penempatan" class="form-control select2">
                         <option value="">--Pilih--</option>
-                        <option value="Ruang Centralize">R. CENTRALIZE</option>
-                        <option value="Ruang Proj.Studio 1">R. PROJ.STUDIO 1</option>
-                        <option value="Ruang Proj.Studio 2">R. PROJ.STUDIO 2</option>
-                        <option value="Ruang Proj.Studio 3">R. PROJ.STUDIO 3</option>
-                        <option value="Ruang Proj.Studio 4">R. PROJ.STUDIO 4</option>
-                        <option value="Ruang Proj.Studio 5">R. PROJ.STUDIO 5</option>
-                        <option value="Ruang Proj.Studio 6">R. PROJ.STUDIO 6</option>
-                        <option value="Ruang Proj.Studio 7">R. PROJ.STUDIO 7</option>
-                        <option value="Ruang Proj.Studio 8">R. PROJ.STUDIO 8</option>
-                        <option value="Ruang Proj.Studio 9">R. PROJ.STUDIO 9</option>
-                        <option value="Ruang Proj.Studio 10">R. PROJ.STUDIO 10</option>
-                        <option value="Ruang Proj.Studio 11">R. PROJ.STUDIO 11</option>
-                        <option value="Ruang Proj.Studio Premiere 1">R. PROJ.STUDIO PREMIERE 1</option>
-                        <option value="Ruang Proj.Studio Premiere 2">R. PROJ.STUDIO PREMIERE 2</option>
-                        <option value="Ruang Proj.Studio Premiere 3">R. PROJ.STUDIO PREMIERE 3</option>
-                        <option value="Ruang Proj.Studio Premiere 4">R. PROJ.STUDIO PREMIERE 4</option>
-                        <option value="Ruang Proj.Studio IMAX">R. PROJ.STUDIO IMAX</option>
+                        <option value="R.CENTRALIZE">R.CENTRALIZE</option>
+                        <option value="R.PROJ.STUDIO 1">R.PROJ.STUDIO 1</option>
+                        <option value="R.PROJ.STUDIO 2">R.PROJ.STUDIO 2</option>
+                        <option value="R.PROJ.STUDIO 3">R.PROJ.STUDIO 3</option>
+                        <option value="R.PROJ.STUDIO 4">R.PROJ.STUDIO 4</option>
+                        <option value="R.PROJ.STUDIO 5">R.PROJ.STUDIO 5</option>
+                        <option value="R.PROJ.STUDIO 6">R.PROJ.STUDIO 6</option>
+                        <option value="R.PROJ.STUDIO 7">R.PROJ.STUDIO 7</option>
+                        <option value="R.PROJ.STUDIO 8">R.PROJ.STUDIO 8</option>
+                        <option value="R.PROJ.STUDIO 9">R.PROJ.STUDIO 9</option>
+                        <option value="R.PROJ.STUDIO 10">R.PROJ.STUDIO 10</option>
+                        <option value="R.PROJ.STUDIO 11">R.PROJ.STUDIO 11</option>
+                        <option value="R.PROJ.STUDIO PREMIERE 1">R.PROJ.STUDIO PREMIERE 1</option>
+                        <option value="R.PROJ.STUDIO PREMIERE 2">R.PROJ.STUDIO PREMIERE 2</option>
+                        <option value="R.PROJ.STUDIO PREMIERE 3">R.PROJ.STUDIO PREMIERE 3</option>
+                        <option value="R.PROJ.STUDIO PREMIERE 4">R.PROJ.STUDIO PREMIERE 4</option>
+                        <option value="R.PROJ.STUDIO IMAX">R.PROJ.STUDIO IMAX</option>
                     </select>
                 </div>
 
@@ -115,13 +118,24 @@
 
 @push('scripts')
     <script>
+        // Auto close alert setelah 5 detik
+        setTimeout(function() {
+            let alertBox = document.getElementById('success-alert');
+            if (alertBox) {
+                let bsAlert = new bootstrap.Alert(alertBox);
+                bsAlert.close();
+            }
+        }, 5000);
+    </script>
+
+    <script>
         $(document).ready(function() {
             $('.select2').select2({
                 placeholder: "--Pilih--",
                 allowClear: true,
                 width: '100%',
                 dropdownAutoWidth: true,
-                minimumResultsForSearch: Infinity // ⛔ Hilangkan kotak pencarian
+                minimumResultsForSearch: Infinity
             });
         });
     </script>
