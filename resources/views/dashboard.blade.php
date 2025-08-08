@@ -469,5 +469,40 @@
                 font-size: 12px !important;
             }
         }
+
+        /* Tombol prev di kiri luar */
+        #carouselDcp .carousel-control-prev {
+            left: -5px;
+            /* geser 40px ke kiri dari default */
+            width: 40px;
+            /* sesuaikan lebar tombol */
+            height: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(221, 221, 221, 0.7);
+            /* transparan biru supaya jelas */
+            border-radius: 50%;
+        }
+
+        /* Tombol next di kanan luar */
+        #carouselDcp .carousel-control-next {
+            right: -5px;
+            /* geser 40px ke kanan dari default */
+            width: 40px;
+            height: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(221, 221, 221, 0.7);
+            border-radius: 50%;
+        }
+
+        /* Icon panah bisa diatur warna & ukuran */
+        #carouselDcp .carousel-control-prev-icon,
+        #carouselDcp .carousel-control-next-icon {
+            filter: invert(1);
+            /* bikin ikon panah putih */
+            width: 20px;
+            height: 20px;
+        }
     </style>
 @endpush
