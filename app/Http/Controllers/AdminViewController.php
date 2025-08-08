@@ -67,7 +67,10 @@ class AdminViewController extends Controller
   public function showOnesheet($userId)
   {
     $selectedUser = Admin::findOrFail($userId);
-    $onesheets = Onesheet::where('admin_id', $userId)->get();
+    $onesheets = Onesheet::where('admin_id', $userId)
+      ->orderBy('tanggal', 'desc')
+      ->paginate(5)
+      ->appends(request()->query());
     return view('admin.data.onesheet', compact('selectedUser', 'onesheets'));
   }
 
@@ -75,7 +78,10 @@ class AdminViewController extends Controller
   public function showProjector($userId)
   {
     $selectedUser = Admin::findOrFail($userId);
-    $data = MaintenanceProjector::where('admin_id', $userId)->get();
+    $data = MaintenanceProjector::where('admin_id', $userId)
+      ->orderBy('tanggal', 'desc')
+      ->paginate(5)
+      ->appends(request()->query());
     return view('admin.data.projector', compact('selectedUser', 'data'));
   }
 
@@ -83,7 +89,10 @@ class AdminViewController extends Controller
   public function showHvac($userId)
   {
     $selectedUser = Admin::findOrFail($userId);
-    $data = MaintenanceHvac::where('admin_id', $userId)->get();
+    $data = MaintenanceHvac::where('admin_id', $userId)
+      ->orderBy('tanggal', 'desc')
+      ->paginate(5)
+      ->appends(request()->query());
     return view('admin.data.hvac', compact('selectedUser', 'data'));
   }
 }
