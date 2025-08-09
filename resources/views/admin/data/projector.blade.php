@@ -46,7 +46,7 @@
                     <!-- Tombol PDF -->
                     <a href="{{ route('maintenance.projector.pdf', request()->query()) }}"
                         class="btn btn-danger btn-sm d-flex align-items-center">
-                        <i class="bi bi-file-earmark-pdf me-1"></i> PDF
+                        <i class="bi bi-file-earmark-pdf me-1"></i>Export PDF
                     </a>
                 </div>
             </form>
