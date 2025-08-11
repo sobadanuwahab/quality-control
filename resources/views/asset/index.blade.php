@@ -15,6 +15,19 @@
                     <input type="text" name="search" class="form-control" placeholder="Cari Nama Asset"
                         value="{{ request('search') }}">
                 </div>
+
+                <div class="col-md-4">
+                    <select name="penempatan" class="form-control">
+                        <option value="">-- Semua Penempatan --</option>
+                        @foreach ($penempatanList as $penempatan)
+                            <option value="{{ $penempatan }}"
+                                {{ request('penempatan') == $penempatan ? 'selected' : '' }}>
+                                {{ $penempatan }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
                 <div class="col-md-4">
                     <button type="submit" class="btn btn-primary">Search</button>
                     <a href="{{ route('asset.index') }}" class="btn btn-success">Refresh</a>

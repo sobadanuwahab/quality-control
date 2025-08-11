@@ -54,13 +54,18 @@ class AssetController extends Controller
       $query->where('grouping_asset', $request->grouping_asset);
     }
 
+    // Filter by Penempatan
+    if ($request->filled('penempatan')) {
+      $query->where('penempatan', $request->penempatan);
+    }
+
     // Search by Nama Asset
     if ($request->filled('search')) {
       $query->where('nama_asset', 'like', '%' . $request->search . '%');
     }
 
-    // Manual pagination jika ada filter pencarian atau grouping
-    if ($request->filled('search') || $request->filled('grouping_asset')) {
+    // Manual pagination jika ada filter pencarian, grouping, atau penempatan
+    if ($request->filled('search') || $request->filled('grouping_asset') || $request->filled('penempatan')) {
       $filtered = $query->get();
       $perPage = 6;
       $page = $request->get('page', 1);
@@ -80,7 +85,13 @@ class AssetController extends Controller
     // Ambil semua opsi Grouping unik untuk dropdown filter
     $groupingOptions = Asset::select('grouping_asset')->distinct()->pluck('grouping_asset');
 
-    return view('asset.index', compact('assets', 'groupingOptions'));
+    // Ambil semua opsi Penempatan unik untuk dropdown filter
+    $penempatanList = Asset::select('penempatan')
+      ->distinct()
+      ->whereNotNull('penempatan')
+      ->pluck('penempatan');
+
+    return view('asset.index', compact('assets', 'groupingOptions', 'penempatanList'));
   }
 
   public function edit($id)
