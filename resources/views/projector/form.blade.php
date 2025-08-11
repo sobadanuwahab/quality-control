@@ -115,4 +115,19 @@
             });
         });
     </script>
+
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 38px !important;
+            /* Bootstrap .form-control default height */
+            padding: 6px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 24px;
+            /* teks di tengah */
+        }
+    </style>
 @endpush
