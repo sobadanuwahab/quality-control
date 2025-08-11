@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <select name="penempatan" class="form-control">
+                    <select name="penempatan" class="form-control select2">
                         <option value="">-- Semua Penempatan --</option>
                         @foreach ($penempatanList as $penempatan)
                             <option value="{{ $penempatan }}"
@@ -40,3 +40,32 @@
         </div>
     </main>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "--Pilih--",
+                allowClear: true,
+                width: '100%',
+                dropdownAutoWidth: true,
+                minimumResultsForSearch: Infinity // ⛔ Hilangkan kotak pencarian
+            });
+        });
+    </script>
+
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 38px !important;
+            /* Bootstrap .form-control default height */
+            padding: 6px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 0.375rem;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 24px;
+            /* teks di tengah */
+        }
+    </style>
+@endpush
