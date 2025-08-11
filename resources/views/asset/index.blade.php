@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <select name="penempatan" class="form-control select2">
+                    <select name="penempatan" class="form-select select2">
                         <option value="">-- Semua Penempatan --</option>
                         @foreach ($penempatanList as $penempatan)
                             <option value="{{ $penempatan }}"
@@ -46,7 +46,7 @@
         $(document).ready(function() {
             $('.select2').select2({
                 placeholder: "--Pilih Lokasi--",
-                allowClear: true,
+                allowClear: false,
                 width: '100%',
                 dropdownAutoWidth: true,
                 minimumResultsForSearch: Infinity // ⛔ Hilangkan kotak pencarian
