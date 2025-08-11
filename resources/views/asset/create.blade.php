@@ -38,7 +38,7 @@
                         <option value="POWER AMPLIFIER">POWER AMPLIFIER</option>
                         <option value="AUTOMATION CONTROLLER (ACT)">AUTOMATION CONTROLLER (ACT)</option>
                         <option value="UNINTERRUPTIBLE POWER SUPPLY (UPS)">UNINTERRUPTIBLE POWER SUPPLY (UPS)</option>
-                        <option value="LAYAR">LAYAR</option>
+                        <option value="SCREEN">SCREEN</option>
                         <option value="HVAC SPLIT DUCT">HVAC SPLIT DUCT</option>
                         <option value="HVAC SPLIT WALL">HVAC SPLIT WALL</option>
                     </select>
@@ -54,6 +54,7 @@
                         <option value="DOLBY">DOLBY</option>
                         <option value="QSC">QSC</option>
                         <option value="VIVE AUDIO">VIVE AUDIO</option>
+                        <option value="HARKNESS SCREEN">HARKNESS SCREEN</option>
                         <option value="TICA">TICA</option>
                         <option value="YORK">YORK</option>
                         <option value="TP-LINK">TP-LINK</option>
