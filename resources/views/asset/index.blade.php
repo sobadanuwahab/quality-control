@@ -45,7 +45,7 @@
     <script>
         $(document).ready(function() {
             $('.select2').select2({
-                placeholder: "--Pilih--",
+                placeholder: "--Pilih Lokasi--",
                 allowClear: true,
                 width: '100%',
                 dropdownAutoWidth: true,
