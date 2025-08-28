@@ -8,6 +8,7 @@
             <th>Model / Type</th>
             <th>Penempatan</th>
             <th>Picture</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -31,6 +32,16 @@
                     @else
                         <small>- Tidak ada -</small>
                     @endif
+                </td>
+                <td>
+                    <form action="{{ route('asset.destroy', $asset->id) }}" method="POST"
+                        onsubmit="return confirm('Yakin hapus asset ini?')" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
                 </td>
             </tr>
         @empty

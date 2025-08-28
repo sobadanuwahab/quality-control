@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Asset;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AssetController extends Controller
 {
@@ -140,5 +142,19 @@ class AssetController extends Controller
     $asset->save();
 
     return redirect()->route('asset.index')->with('success', 'Asset berhasil diperbarui');
+  }
+
+  public function destroy($id)
+  {
+    $asset = Asset::findOrFail($id);
+
+    // Hapus foto dari storage jika ada
+    if ($asset->foto && Storage::disk('public')->exists($asset->foto)) {
+      Storage::disk('public')->delete($asset->foto);
+    }
+
+    $asset->delete();
+
+    return redirect()->route('asset.index')->with('success', 'Asset berhasil dihapus!');
   }
 }

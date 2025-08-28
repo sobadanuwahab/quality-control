@@ -137,6 +137,7 @@ Route::prefix('asset')->middleware('auth:admin')->group(function () {
   Route::get('/asset/create', [AssetController::class, 'create'])->name('asset.create');
   Route::post('/store', [AssetController::class, 'store'])->name('asset.store');
   Route::get('/', [AssetController::class, 'index'])->name('asset.index');
+  Route::delete('/{id}', [AssetController::class, 'destroy'])->name('asset.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
